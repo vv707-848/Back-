@@ -789,11 +789,11 @@
 
     /* ====== بطاقة العقار ====== */
     .property-card {
-      border: 1px solid rgba(210, 225, 240, 0.5);
-      border-radius: 20px;
+      border: none;
+      border-radius: 12px;
       overflow: hidden;
-      background: #ffffff;
-      box-shadow: 0 8px 25px rgba(0, 42, 94, 0.08);
+      background: #1a1f2c;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
       transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       position: relative;
       display: flex;
@@ -801,51 +801,53 @@
       height: 100%;
       transform: translateY(0);
       will-change: transform, box-shadow;
+      color: #fff;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .property-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 22px 45px rgba(0, 42, 94, 0.15);
-      background: #fff;
-      border-color: rgba(88, 146, 255, 0.2);
+      transform: translateY(-7px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
     }
     
-    .property-card::before {
+    .property-card::after {
       content: '';
       position: absolute;
-      top: 0;
+      bottom: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(to right, #5892ff, #3da5e3);
+      height: 3px;
+      background: linear-gradient(to right, #ff6b6b, #ffa07a);
       z-index: 2;
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      transform: scaleX(0.7);
+      opacity: 0.8;
+      transition: all 0.5s ease;
+      border-radius: 3px;
     }
     
-    .property-card:hover::before {
+    .property-card:hover::after {
+      transform: scaleX(1);
       opacity: 1;
     }
 
     .property-image-wrapper {
       position: relative;
       overflow: hidden;
-      height: 230px;
-      clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+      height: 200px;
     }
 
     .property-card img {
       height: 100%;
       width: 100%;
       object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1), filter 0.8s ease;
-      will-change: transform, filter;
-      filter: brightness(0.95) saturate(1.05);
+      transition: transform 0.6s ease-out;
+      will-change: transform;
+      filter: contrast(1.1);
     }
 
     .property-card:hover img {
-      transform: scale(1.1);
-      filter: brightness(1.05) saturate(1.15);
+      transform: scale(1.12);
     }
     
     .property-image-overlay {
@@ -854,14 +856,22 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.2));
+      background: linear-gradient(to bottom, rgba(26,31,44,0.2), rgba(26,31,44,0.6));
       z-index: 1;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
     }
     
-    .property-card:hover .property-image-overlay {
-      opacity: 0.5;
+    .property-sale-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #ff6b6b;
+      color: white;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     /* تأثيرات حركية للبطاقة عند المرور عليها */
@@ -1030,128 +1040,92 @@
       flex-grow: 1;
       display: flex;
       flex-direction: column;
+      background: linear-gradient(to bottom, rgba(26,31,44,1), rgba(20,25,35,1));
     }
 
     /* محتوى بطاقة العقار */
     .property-content {
-      padding: 20px 25px 20px;
+      padding: 20px 22px;
       display: flex;
       flex-direction: column;
       height: 100%;
-      background: #ffffff;
+      background: #1a1f2c;
       position: relative;
-      margin-top: -15px;
       z-index: 2;
-      border-radius: 28px 28px 0 0;
     }
 
     .property-category {
       display: inline-block;
-      color: #5892ff;
+      color: #ff6b6b;
       font-size: 0.8rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      position: absolute;
-      top: -12px;
-      right: 25px;
-      background: white;
-      padding: 4px 15px;
-      border-radius: 30px;
-      box-shadow: 0 4px 10px rgba(0, 42, 94, 0.08);
-      border: 1px solid rgba(88, 146, 255, 0.2);
-      z-index: 2;
-      transition: all 0.3s ease;
-    }
-    
-    .property-card:hover .property-category {
-      box-shadow: 0 5px 12px rgba(0, 42, 94, 0.12);
-      transform: translateY(-2px);
+      font-weight: 600;
+      margin-bottom: 8px;
+      position: relative;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .property-title {
       font-weight: 700;
-      font-size: 1.2rem;
-      margin: 15px 0 16px;
-      color: #162b4d;
-      line-height: 1.45;
+      font-size: 1.3rem;
+      margin: 5px 0 15px;
+      color: white;
+      line-height: 1.4;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      letter-spacing: 0.5px;
       overflow: hidden;
       text-overflow: ellipsis;
-      min-height: 3.4rem;
+      min-height: 3rem;
       position: relative;
       transition: all 0.3s ease;
-      letter-spacing: -0.02em;
     }
     
-    .property-title::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      right: 0;
-      width: 40px;
-      height: 3px;
-      background: linear-gradient(to right, #5892ff, #3da5e3);
-      border-radius: 3px;
-      transition: width 0.3s ease;
-    }
-    
-    .property-card:hover .property-title::after {
-      width: 80px;
-    }
-
     .property-card:hover .property-title {
-      color: var(--primary-color);
+      color: #ffa07a;
     }
 
     .property-location {
       display: flex;
       align-items: center;
       gap: 5px;
-      color: var(--light-text);
-      margin-bottom: 14px;
-      font-size: 0.9rem;
-      padding-bottom: 10px;
-      border-bottom: 1px dashed rgba(0,0,0,0.08);
+      color: #a0a7b5;
+      margin-bottom: 15px;
+      font-size: 0.85rem;
+      position: relative;
     }
 
     .property-location i {
-      color: var(--accent-color);
-      font-size: 1rem;
+      color: #ff6b6b;
+      font-size: 0.95rem;
     }
 
     .property-price {
-      background: #f6f9ff;
-      border-radius: 12px;
-      padding: 16px 20px;
+      background: #272d3a;
+      border-radius: 0;
+      padding: 15px 18px;
       margin: 5px 0 18px;
-      font-size: 1.4rem;
-      color: #5892ff;
-      font-weight: 800;
+      font-size: 1.5rem;
+      color: #ff6b6b;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: inset 0 1px 4px rgba(88, 146, 255, 0.1);
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(88, 146, 255, 0.15);
-      transition: all 0.3s ease;
+      border-left: 3px solid #ff6b6b;
     }
     
-    .property-card:hover .property-price {
-      background: #eef4ff;
-      box-shadow: inset 0 1px 5px rgba(88, 146, 255, 0.15);
-    }
-    
-    .property-price::before {
+    .property-price::after {
       content: '';
       position: absolute;
       top: 0;
       right: 0;
-      width: 60px;
+      width: 40px;
       height: 100%;
-      background: linear-gradient(to left, rgba(88, 146, 255, 0.08), transparent);
+      background: linear-gradient(to left, #272d3a, transparent);
     }
 
     .property-price small {
@@ -1163,20 +1137,9 @@
     .property-features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 10px 0 15px;
+      gap: 8px;
+      margin: 15px 0;
       position: relative;
-    }
-    
-    .property-features::after {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(to right, rgba(88, 146, 255, 0.1), rgba(88, 146, 255, 0.2), rgba(88, 146, 255, 0.1));
-      border-radius: 1px;
     }
 
     .feature-item {
@@ -1185,39 +1148,22 @@
       justify-content: center;
       text-align: center;
       position: relative;
-      padding: 8px 10px;
-      background: #f9fbff;
-      border-radius: 10px;
-      border: 1px solid rgba(88, 146, 255, 0.1);
+      padding: 8px 5px;
+      background: #272d3a;
       transition: all 0.3s ease;
-    }
-    
-    .property-card:hover .feature-item {
-      transform: translateY(-2px);
-      box-shadow: 0 3px 8px rgba(88, 146, 255, 0.05);
+      color: #a0a7b5;
     }
 
     .feature-item i {
-      color: #5892ff;
+      color: #ffa07a;
       font-size: 1.05rem;
       margin-left: 8px;
       position: relative;
     }
 
-    .feature-item i:before {
-      position: relative;
-      z-index: 2;
-      background: linear-gradient(135deg, #5892ff, #3da5e3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
-    }
-
     .feature-value {
-      color: #2d3748;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .property-card:hover .feature-item i:after {
@@ -1249,9 +1195,13 @@
     .property-price {
       font-size: 1.2rem;
       font-weight: 700;
-      color: var(--primary-color);
+      color: #ff6b6b;
       display: flex;
       flex-direction: column;
+      background: linear-gradient(to right, #ff6b6b, #ffa07a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
     .property-price small {
@@ -2423,57 +2373,7 @@
                 </tr>
               </thead>
               <tbody id="clientSubmissionsTableBody">
-                <!-- سيتم تعبئة الجدول هنا -->
-                <tr>
-                  <td>1</td>
-                  <td>٢٨ مارس ٢٠٢٥</td>
-                  <td>أحمد محمد</td>
-                  <td dir="ltr">+966 50 123 4567</td>
-                  <td>شقة عائلية مميزة</td>
-                  <td>الطائف - حي الشهداء</td>
-                  <td>850,000 ريال</td>
-                  <td><span class="status-badge pending">معلق</span></td>
-                  <td>
-                    <div class="btn-group">
-                      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#clientSubmissionViewModal"><i class="bi bi-eye"></i></button>
-                      <button class="btn btn-sm btn-outline-success"><i class="bi bi-check-lg"></i></button>
-                      <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>٢٥ مارس ٢٠٢٥</td>
-                  <td>خالد سعيد</td>
-                  <td dir="ltr">+966 54 765 4321</td>
-                  <td>أرض سكنية</td>
-                  <td>الطائف - حي الفيصلية</td>
-                  <td>1,200,000 ريال</td>
-                  <td><span class="status-badge approved">تمت الموافقة</span></td>
-                  <td>
-                    <div class="btn-group">
-                      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#clientSubmissionViewModal"><i class="bi bi-eye"></i></button>
-                      <button class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></button>
-                      <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>٢٠ مارس ٢٠٢٥</td>
-                  <td>سارة عبدالله</td>
-                  <td dir="ltr">+966 55 987 6543</td>
-                  <td>فيلا مفروشة</td>
-                  <td>الطائف - حي السلامة</td>
-                  <td>2,500,000 ريال</td>
-                  <td><span class="status-badge rejected">مرفوض</span></td>
-                  <td>
-                    <div class="btn-group">
-                      <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#clientSubmissionViewModal"><i class="bi bi-eye"></i></button>
-                      <button class="btn btn-sm btn-outline-warning"><i class="bi bi-arrow-repeat"></i></button>
-                    </div>
-                  </td>
-                </tr>
+                <!-- تم حذف الإعلانات الوهمية - سيتم تعبئة الجدول بالإعلانات الحقيقية من قاعدة البيانات -->
               </tbody>
             </table>
           </div>
@@ -4257,6 +4157,9 @@
           // إضافة مشروع جديد
           window.projects.push(project);
         }
+
+        // حفظ في التخزين المحلي
+        saveProjectsToLocalStorage();
 
         // حفظ في Firebase إذا كان متاحاً
         if (firebase?.database) {
@@ -6621,14 +6524,58 @@
       }
     }
 
+    // حفظ المشاريع في التخزين المحلي
+    function saveProjectsToLocalStorage() {
+      try {
+        localStorage.setItem('projects', JSON.stringify(window.projects || []));
+      } catch (error) {
+        console.error('Error saving projects to localStorage:', error);
+      }
+    }
+
+    // تحميل المشاريع من التخزين المحلي
+    function loadProjectsFromLocalStorage() {
+      try {
+        const savedProjects = localStorage.getItem('projects');
+        return savedProjects ? JSON.parse(savedProjects) : [];
+      } catch (error) {
+        console.error('Error loading projects from localStorage:', error);
+        return [];
+      }
+    }
+
     function generateProjectCards() {
       const container = document.getElementById('projectsContainer');
       if (!container) return;
 
       container.innerHTML = '';
 
-      // الحصول على المشاريع من Firebase
-      const projects = window.projects || [];
+      // الحصول على المشاريع من التخزين المحلي أو من الذاكرة
+      let projects = window.projects || loadProjectsFromLocalStorage() || [];
+      
+      // إذا كانت المشاريع غير موجودة، قم بتهيئة مصفوفة فارغة
+      if (!projects) {
+        projects = [];
+        window.projects = projects;
+      }
+      
+      // حذف المشاريع الوهمية الثلاثة عند أول تحميل للصفحة
+      const removedFakeProjects = localStorage.getItem('removedFakeProjects');
+      if (!removedFakeProjects && projects.length > 0) {
+        if (projects.length >= 3) {
+          // حذف المشاريع الوهمية الثلاثة الأولى
+          projects = projects.slice(3);
+          window.projects = projects;
+        } else {
+          // إذا كان عدد المشاريع أقل من 3، نحذف جميع المشاريع لأنها وهمية
+          projects = [];
+          window.projects = projects;
+        }
+        // تعيين علامة تشير إلى أنه تم حذف المشاريع الوهمية
+        localStorage.setItem('removedFakeProjects', 'true');
+        // حفظ التغييرات في التخزين المحلي
+        saveProjectsToLocalStorage();
+      }
 
       // إذا كانت القائمة فارغة نعرض رسالة
       if (projects.length === 0) {
