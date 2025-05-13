@@ -63,288 +63,7 @@
       --transition: all 0.35s ease;
     }
     
-    /* ===== بداية تصميم بطاقة العقار الجديدة ===== */
-    .property-card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-      position: relative;
-      transition: all 0.4s ease;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(230, 230, 230, 0.6);
-    }
-    
-    .property-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-    }
-    
-    /* حاوية صورة العقار */
-    .property-img-container {
-      position: relative;
-      height: 220px;
-      overflow: hidden;
-    }
-    
-    .property-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.75s ease;
-    }
-    
-    .property-card:hover .property-image {
-      transform: scale(1.1);
-    }
-    
-    .property-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.6));
-      z-index: 1;
-    }
-    
-    /* شارة نوع العقار (بيع/إيجار) */
-    .property-type-label {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      padding: 6px 15px;
-      border-radius: 30px;
-      color: white;
-      font-weight: 600;
-      font-size: 0.85rem;
-      z-index: 2;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(5px);
-    }
-    
-    .property-type-label.sale {
-      background-color: var(--type-sale-badge);
-    }
-    
-    .property-type-label.rent {
-      background-color: var(--type-rent-badge);
-    }
-    
-    /* حاوية الشارات */
-    .property-badges-container {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 2;
-    }
-    
-    .property-badge {
-      padding: 5px 12px;
-      border-radius: 30px;
-      display: inline-flex;
-      align-items: center;
-      font-size: 0.8rem;
-      font-weight: 600;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(5px);
-    }
-    
-    .badge-featured {
-      background-color: var(--featured-badge);
-      color: white;
-    }
-    
-    .badge-exclusive {
-      background-color: var(--exclusive-badge);
-      color: white;
-    }
-    
-    .badge-pinned {
-      background-color: var(--pinned-badge);
-      color: white;
-    }
-    
-    /* شارة السعر */
-    .property-price-tag {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      background: var(--primary-color);
-      color: white;
-      padding: 8px 18px;
-      border-radius: 8px;
-      font-weight: 700;
-      z-index: 2;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      backdrop-filter: blur(5px);
-    }
-    
-    .price-amount {
-      font-size: 1.1rem;
-    }
-    
-    .price-period {
-      font-size: 0.8rem;
-      opacity: 0.9;
-    }
-    
-    /* محتوى العقار */
-    .property-content {
-      padding: 20px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .property-category {
-      display: inline-flex;
-      align-items: center;
-      background-color: var(--primary-light);
-      color: var(--primary-color);
-      padding: 5px 12px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
-      font-weight: 600;
-      width: fit-content;
-    }
-    
-    .property-category i {
-      margin-left: 8px;
-      font-size: 0.9rem;
-    }
-    
-    .property-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--dark-text);
-      margin-bottom: 8px;
-      line-height: 1.4;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-    
-    .property-location {
-      display: flex;
-      align-items: center;
-      color: var(--light-text);
-      font-size: 0.9rem;
-      margin-bottom: 15px;
-    }
-    
-    .property-location i {
-      color: #f44336;
-      margin-left: 8px;
-      font-size: 1rem;
-    }
-    
-    /* مواصفات العقار */
-    .property-specs {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      margin-bottom: 15px;
-    }
-    
-    .property-spec-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      flex: 1;
-      padding: 8px;
-      position: relative;
-    }
-    
-    .property-spec-item:not(:last-child):after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 15%;
-      bottom: 15%;
-      width: 1px;
-      background-color: rgba(0,0,0,0.05);
-    }
-    
-    .property-spec-item i {
-      font-size: 1.2rem;
-      color: var(--primary-color);
-      margin-bottom: 5px;
-    }
-    
-    .spec-value {
-      font-weight: 700;
-      color: var(--dark-text);
-      font-size: 1rem;
-    }
-    
-    .spec-unit {
-      font-size: 0.8rem;
-      color: var(--light-text);
-    }
-    
-    /* أزرار التفاعل */
-    .property-actions-footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: auto;
-    }
-    
-    .view-details-btn {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 9px 18px;
-      border-radius: 30px;
-      font-weight: 600;
-      flex-grow: 1;
-      margin-left: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 12px rgba(15, 76, 129, 0.3);
-      cursor: pointer;
-    }
-    
-    .view-details-btn:hover {
-      background-color: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(15, 76, 129, 0.4);
-    }
-    
-    .whatsapp-btn {
-      width: 42px;
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #25D366;
-      color: white;
-      border-radius: 50%;
-      text-decoration: none;
-      border: none;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 12px rgba(37, 211, 102, 0.3);
-    }
-    
-    .whatsapp-btn:hover {
-      transform: scale(1.1) rotate(10deg);
-      box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
-    }
-    /* ===== نهاية تصميم بطاقة العقار الجديدة ===== */
+        /* ===== تم تعريف تصميم بطاقات العقار بشكل ديناميكي بداخل JavaScript ===== */
 
     html {
       scroll-behavior: smooth;
@@ -4943,6 +4662,8 @@
 
       // استخلاص بيانات المساحة
       const area = property.features?.area || "";
+      const rooms = property.features?.rooms || "";
+      const bathrooms = property.features?.bathrooms || "";
 
       // إعداد الشارات الخاصة بالعقار
       let badgesHTML = '';
@@ -4950,98 +4671,95 @@
       // إضافة شارات خاصة للعقارات المميزة
       if (property.badge === "featured") {
         badgesHTML += `
-          <div class="property-badge badge-featured">
-            <i class="bi bi-award-fill me-1"></i> مميز
+          <div class="badge-premium">
+            <i class="bi bi-award-fill"></i> مميز
           </div>
         `;
       }
 
       if (property.badge === "حصري" || property.isExclusive || property.badge === "exclusive") {
         badgesHTML += `
-          <div class="property-badge badge-exclusive">
-            <i class="bi bi-star-fill me-1"></i> حصري
+          <div class="badge-exclusive">
+            <i class="bi bi-star-fill"></i> حصري
           </div>
         `;
       }
 
       if (property.badge === "عرض مثبت" || property.badge === "pinned") {
         badgesHTML += `
-          <div class="property-badge badge-pinned">
-            <i class="bi bi-pin-angle-fill me-1"></i> عرض مثبت
+          <div class="badge-featured">
+            <i class="bi bi-pin-angle-fill"></i> مثبت
           </div>
         `;
       }
 
+      // إنشاء بطاقة عقار بتصميم جديد كلياً
       colDiv.innerHTML = `
-        <div class="property-card">
-          <!-- جزء صورة العقار مع الشارات -->
-          <div class="property-img-container">
-            <img src="${image}" alt="${property.title || 'عقار'}" class="property-image">
-            <div class="property-overlay"></div>
-            <div class="property-type-label ${type === 'للإيجار' ? 'rent' : 'sale'}">${type}</div>
-            <div class="property-badges-container">
+        <div class="real-estate-card">
+          <div class="card-image-container">
+            <img src="${image}" alt="${property.title || 'عقار'}" class="card-image">
+            
+            <div class="property-label ${type === 'للإيجار' ? 'rent-label' : 'sale-label'}">
+              <span>${type}</span>
+            </div>
+            
+            <div class="property-price">
+              <span>${price}</span>
+            </div>
+            
+            <div class="badge-container">
               ${badgesHTML}
             </div>
-            <!-- زر السعر مميز -->
-            <div class="property-price-tag">
-              <span class="price-amount">${price}</span>
-              <span class="price-period">${type === "للإيجار" ? "/ شهرياً" : ""}</span>
-            </div>
+            
+            <div class="image-overlay"></div>
           </div>
           
-          <!-- محتوى العقار -->
-          <div class="property-content">
-            <!-- تصنيف العقار -->
-            <div class="property-category">
-              <i class="bi bi-tag-fill"></i>
-              <span>${property.category || ""}</span>
-            </div>
+          <div class="card-content">
+            <h3 class="property-title">${property.title || ""}</h3>
             
-            <!-- عنوان العقار -->
-            <h3 class="property-title" title="${property.title || ''}">${property.title || ""}</h3>
-            
-            <!-- موقع العقار -->
-            <div class="property-location">
+            <div class="property-address">
               <i class="bi bi-geo-alt-fill"></i>
               <span>${property.location || ""}</span>
             </div>
             
-            <!-- مواصفات العقار -->
-            <div class="property-specs">
+            <div class="property-features">
               ${area ? `
-                <div class="property-spec-item">
-                  <i class="bi bi-rulers"></i>
-                  <span class="spec-value">${area}</span>
-                  <span class="spec-unit">م²</span>
+                <div class="feature">
+                  <i class="bi bi-bounding-box"></i>
+                  <span>${area} م²</span>
                 </div>
               ` : ''}
               
-              <!-- إضافة مواصفات إضافية إذا متوفرة -->
-              ${property.features?.rooms ? `
-                <div class="property-spec-item">
-                  <i class="bi bi-houses"></i>
-                  <span class="spec-value">${property.features.rooms}</span>
-                  <span class="spec-unit">غرف</span>
+              ${rooms ? `
+                <div class="feature">
+                  <i class="bi bi-house-door"></i>
+                  <span>${rooms} غرف</span>
                 </div>
               ` : ''}
               
-              ${property.features?.bathrooms ? `
-                <div class="property-spec-item">
+              ${bathrooms ? `
+                <div class="feature">
                   <i class="bi bi-droplet"></i>
-                  <span class="spec-value">${property.features.bathrooms}</span>
-                  <span class="spec-unit">حمامات</span>
+                  <span>${bathrooms} حمامات</span>
                 </div>
               ` : ''}
             </div>
             
-            <!-- أزرار التفاعل -->
-            <div class="property-actions-footer">
-              <button class="view-details-btn" onclick="viewPropertyDetails('${property.key || property.id}')">
-                <i class="bi bi-eye"></i> عرض التفاصيل
-              </button>
-              <a href="https://wa.me/966535342404?text=استفسار حول العقار: ${encodeURIComponent(property.title || '')}" class="whatsapp-btn" target="_blank">
+            <div class="property-category">
+              <i class="bi bi-tag"></i>
+              <span>${property.category || ""}</span>
+            </div>
+            
+            <div class="card-actions">
+              <a href="https://wa.me/966535342404?text=استفسار حول العقار: ${encodeURIComponent(property.title || '')}" class="action-button whatsapp-button" target="_blank">
                 <i class="bi bi-whatsapp"></i>
+                <span>واتساب</span>
               </a>
+              
+              <button class="action-button details-button" onclick="viewPropertyDetails('${property.key || property.id}')">
+                <i class="bi bi-search"></i>
+                <span>التفاصيل</span>
+              </button>
             </div>
           </div>
         </div>
@@ -5053,23 +4771,261 @@
         styleEl.id = 'property-card-styles';
         styleEl.textContent = `
           /* تصميم بطاقة العقار الجديد والاحترافي */
-          .property-card {
+          .real-estate-card {
             background: #fff;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
             transition: all 0.4s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(230, 230, 230, 0.6);
+            border: none;
           }
           
-          .property-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+          .real-estate-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
           }
+          
+          /* حاوية الصورة */
+          .card-image-container {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+          }
+          
+          .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+          }
+          
+          .real-estate-card:hover .card-image {
+            transform: scale(1.12);
+          }
+          
+          .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.5));
+            z-index: 1;
+          }
+          
+          /* لابل نوع العقار */
+          .property-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 15px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+          }
+          
+          .sale-label {
+            background-color: #4CAF50;
+          }
+          
+          .rent-label {
+            background-color: #2196F3;
+          }
+          
+          /* سعر العقار */
+          .property-price {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: #0A2647;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
+          }
+          
+          /* حاوية الشارات */
+          .badge-container {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2;
+          }
+          
+          .badge-premium, .badge-exclusive, .badge-featured {
+            padding: 5px 12px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            color: white;
+          }
+          
+          .badge-premium {
+            background-color: #FF9800;
+          }
+          
+          .badge-exclusive {
+            background-color: #9C27B0;
+          }
+          
+          .badge-featured {
+            background-color: #FF5252;
+          }
+          
+          /* محتوى البطاقة */
+          .card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+          }
+          
+          .property-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #263238;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+          
+          .property-address {
+            display: flex;
+            align-items: center;
+            color: #607D8B;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+          }
+          
+          .property-address i {
+            color: #E53935;
+            margin-left: 8px;
+            font-size: 1rem;
+          }
+          
+          /* مواصفات العقار */
+          .property-features {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+          }
+          
+          .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            position: relative;
+          }
+          
+          .feature:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 10%;
+            bottom: 10%;
+            width: 1px;
+            background-color: rgba(0,0,0,0.1);
+          }
+          
+          .feature i {
+            font-size: 1.4rem;
+            color: #0f4c81;
+            margin-bottom: 5px;
+          }
+          
+          .feature span {
+            font-weight: 600;
+            color: #455A64;
+          }
+          
+          /* تصنيف العقار */
+          .property-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #F5F5F5;
+            color: #455A64;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+            width: fit-content;
+          }
+          
+          /* أزرار التفاعل */
+          .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+          }
+          
+          .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            flex: 1;
+          }
+          
+          .whatsapp-button {
+            background-color: #25D366;
+            color: white;
+            box-shadow: 0 5px 12px rgba(37, 211, 102, 0.2);
+          }
+          
+          .whatsapp-button:hover {
+            background-color: #20BD5C;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(37, 211, 102, 0.3);
+          }
+          
+          .details-button {
+            background-color: #144272;
+            color: white;
+            box-shadow: 0 5px 12px rgba(10, 38, 71, 0.2);
+          }
+          
+          .details-button:hover {
+            background-color: #0C3358;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(10, 38, 71, 0.3);
+          }
+          
+          /* إزالة الأنماط القديمة */
           
           /* حاوية صورة العقار */
           .property-img-container {
