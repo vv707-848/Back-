@@ -789,11 +789,11 @@
 
     /* ====== بطاقة العقار ====== */
     .property-card {
-      border: none;
-      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: 16px;
       overflow: hidden;
-      background: #1a1f2c;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      background: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       position: relative;
       display: flex;
@@ -801,16 +801,15 @@
       height: 100%;
       transform: translateY(0);
       will-change: transform, box-shadow;
-      color: #fff;
+      color: #344767;
       margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .property-card:hover {
-      transform: translateY(-7px) scale(1.02);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      transform: translateY(-7px) scale(1.01);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
     }
-    
+
     .property-card::after {
       content: '';
       position: absolute;
@@ -818,14 +817,14 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(to right, #ff6b6b, #ffa07a);
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
       z-index: 2;
       transform: scaleX(0.7);
       opacity: 0.8;
       transition: all 0.5s ease;
       border-radius: 3px;
     }
-    
+
     .property-card:hover::after {
       transform: scaleX(1);
       opacity: 1;
@@ -834,7 +833,8 @@
     .property-image-wrapper {
       position: relative;
       overflow: hidden;
-      height: 200px;
+      height: 220px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .property-card img {
@@ -843,35 +843,38 @@
       object-fit: cover;
       transition: transform 0.6s ease-out;
       will-change: transform;
-      filter: contrast(1.1);
+      filter: brightness(1.02) contrast(1.05);
     }
 
     .property-card:hover img {
       transform: scale(1.12);
     }
-    
+
     .property-image-overlay {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(to bottom, rgba(26,31,44,0.2), rgba(26,31,44,0.6));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
       z-index: 1;
     }
-    
+
     .property-sale-badge {
       position: absolute;
       top: 15px;
       right: 15px;
-      background: #ff6b6b;
+      background: var(--primary-color);
       color: white;
-      padding: 5px 12px;
+      padding: 6px 14px;
       font-size: 0.75rem;
       font-weight: 700;
       z-index: 2;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      border-radius: 50px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
     }
 
     /* تأثيرات حركية للبطاقة عند المرور عليها */
@@ -1049,9 +1052,10 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      background: #1a1f2c;
+      background: #fff;
       position: relative;
       z-index: 2;
+      border-top: none;
     }
 
     .property-category {
@@ -1067,22 +1071,22 @@
 
     .property-title {
       font-weight: 700;
-      font-size: 1.3rem;
-      margin: 5px 0 15px;
-      color: white;
+      font-size: 1.2rem;
+      margin: 5px 0 12px;
+      color: var(--dark-text);
       line-height: 1.4;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-      letter-spacing: 0.5px;
       overflow: hidden;
+      letter-spacing: 0.2px;
       text-overflow: ellipsis;
+      transition: color 0.3s ease;
       min-height: 3rem;
       position: relative;
       transition: all 0.3s ease;
     }
-    
+
     .property-card:hover .property-title {
       color: #ffa07a;
     }
@@ -1091,7 +1095,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      color: #a0a7b5;
+      color: var(--light-text);
       margin-bottom: 15px;
       font-size: 0.85rem;
       position: relative;
@@ -1103,12 +1107,12 @@
     }
 
     .property-price {
-      background: #272d3a;
-      border-radius: 0;
-      padding: 15px 18px;
-      margin: 5px 0 18px;
-      font-size: 1.5rem;
-      color: #ff6b6b;
+      background: var(--primary-light);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin: 5px 0 15px;
+      font-size: 1.4rem;
+      color: var(--primary-color);
       font-weight: 700;
       display: flex;
       justify-content: space-between;
@@ -1117,7 +1121,7 @@
       overflow: hidden;
       border-left: 3px solid #ff6b6b;
     }
-    
+
     .property-price::after {
       content: '';
       position: absolute;
@@ -1137,9 +1141,12 @@
     .property-features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 12px;
       margin: 15px 0;
       position: relative;
+      padding: 10px 0;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .feature-item {
@@ -1148,14 +1155,15 @@
       justify-content: center;
       text-align: center;
       position: relative;
-      padding: 8px 5px;
-      background: #272d3a;
+      padding: 8px 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
       transition: all 0.3s ease;
-      color: #a0a7b5;
+      color: var(--dark-text);
     }
 
     .feature-item i {
-      color: #ffa07a;
+      color: var(--primary-color);
       font-size: 1.05rem;
       margin-left: 8px;
       position: relative;
@@ -1846,7 +1854,7 @@
       localStorage.setItem("realEstateProperties", JSON.stringify(properties));
       console.log("تم حفظ العقارات في التخزين المحلي");
     }
-    
+
     function loadPropertiesFromLocalStorage() {
       const savedProperties = localStorage.getItem("realEstateProperties");
       return savedProperties ? JSON.parse(savedProperties) : [];
@@ -3223,79 +3231,7 @@
   </div>
 
   <!-- قسم المشاريع العقارية -->
-  <section class="container my-5" id="projectsSection">
-    <div class="section-header d-flex justify-content-between align-items-center mb-4">
-      <h2 class="category-title position-relative">المشاريع العقارية
-        <span class="title-line"></span>
-      </h2>
-      <button class="btn btn-outline-primary" onclick="toggleProjectsView()">
-        <i class="bi bi-grid"></i> عرض الكل
-      </button>
-    </div>
-
-    <!-- عرض الشرائح للمشاريع العقارية -->
-    <div id="projectsCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#projectsCarousel" data-bs-slide-to="0" class="active" aria-label="مشروع 1"></button>
-        <button type="button" data-bs-target="#projectsCarousel" data-bs-slide-to="1" aria-label="مشروع 2"></button>
-        <button type="button" data-bs-target="#projectsCarousel" data-bs-slide-to="2" aria-label="مشروع 3"></button>
-      </div>
-      <div class="carousel-inner rounded-4 shadow-lg">
-        <div class="carousel-item active">
-          <div class="project-image-container">
-            <img src="https://images.unsplash.com/photo-1607585011365-45e801736073" class="d-block w-100" alt="مشروع سكني فاخر" style="height: 400px; object-fit: cover;">
-            <div class="project-overlay"></div>
-          </div>
-          <div class="carousel-caption d-md-block">
-            <div class="caption-content bg-white text-dark p-3 rounded-3 shadow mx-auto" style="max-width: 80%;">
-              <h4 class="fw-bold text-primary">مشروع سكني فاخر</h4>
-              <p class="mb-2">مجمع سكني متكامل الخدمات في حي الشهداء</p>
-              <button class="btn btn-sm btn-primary">عرض التفاصيل</button>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="project-image-container">
-            <img src="https://images.unsplash.com/photo-1519972064555-542444e71b2d" class="d-block w-100" alt="تطوير تجاري" style="height: 400px; object-fit: cover;">
-            <div class="project-overlay"></div>
-          </div>
-          <div class="carousel-caption d-md-block">
-            <div class="caption-content bg-white text-dark p-3 rounded-3 shadow mx-auto" style="max-width: 80%;">
-              <h4 class="fw-bold text-primary">تطوير تجاري</h4>
-              <p class="mb-2">مجمع تجاري بتصميم عصري في قلب الطائف</p>
-              <button class="btn btn-sm btn-primary">عرض التفاصيل</button>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="project-image-container">
-            <img src="https://images.unsplash.com/photo-1535261260927-be9a321ac756" class="d-block w-100" alt="مشروع فلل" style="height: 400px; object-fit: cover;">
-            <div class="project-overlay"></div>
-          </div>
-          <div class="carousel-caption d-md-block">
-            <div class="caption-content bg-white text-dark p-3 rounded-3 shadow mx-auto" style="max-width: 80%;">
-              <h4 class="fw-bold text-primary">مشروع فلل</h4>
-              <p class="mb-2">فلل فاخرة بتصاميم حديثة وإطلالات رائعة</p>
-              <button class="btn btn-sm btn-primary">عرض التفاصيل</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#projectsCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-        <span class="visually-hidden">السابق</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#projectsCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-        <span class="visually-hidden">التالي</span>
-      </button>
-    </div>
-
-    <!-- عرض الشبكة للمشاريع العقارية -->
-    <div class="row mt-4 g-4" id="projectsContainer">
-      <!-- بطاقات المشاريع ستظهر هنا -->
-    </div>
-  </section>
+  <!-- تم إزالة قسم المشاريع العقارية المزيفة بناءً على طلب العميل -->
 
   <!-- Toast Notification Container -->
   <div id="toastContainer"></div>
@@ -4416,7 +4352,7 @@
 
       // التحقق مما إذا كانت هناك بيانات محفوظة محليًا
       const savedProps = loadPropertiesFromLocalStorage();
-      
+
       // التحقق من توفر Firebase
       if(propertiesRef && firebase?.database) {
         // استخدام on بدلاً من onSnapshot لأننا نستخدم Firebase Realtime Database وليس Firestore
@@ -4429,7 +4365,7 @@
                 properties.push(property);
               });
               console.log(`تم العثور على ${properties.length} عقار في قاعدة البيانات`);
-              
+
               // تحديث التخزين المحلي بعد استرجاع البيانات من Firebase
               savePropertiesToLocalStorage();
             }
@@ -4881,14 +4817,15 @@
         styleEl.id = 'property-card-styles';
         styleEl.textContent = `
           .property-card {
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.5s ease;
             background-color: #fff;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border: none;
             transform: translateY(0);
+            height: 100%;
           }
 
           .hover-card:hover {
@@ -6174,7 +6111,7 @@
           const index = properties.findIndex(p => (p.key === propertyId || p.id === propertyId));
           if(index >= 0) {
             properties[index] = property;
-            
+
             // حفظ العقارات في التخزين المحلي
             savePropertiesToLocalStorage();
           }
@@ -6203,7 +6140,7 @@
           // إضافة عقار جديد
           property.key = `local_${Date.now()}`;
           properties.push(property);
-          
+
           // حفظ العقارات في التخزين المحلي
           savePropertiesToLocalStorage();
 
@@ -6273,10 +6210,10 @@
       if(index >= 0) {
         properties.splice(index, 1);
         filteredList = [...properties];
-        
+
         // حفظ العقارات في التخزين المحلي بعد الحذف
         savePropertiesToLocalStorage();
-        
+
         generatePropertyCards(filteredList);
         loadAdminTable();
       }
@@ -6389,7 +6326,7 @@
           toggleLoginPanel(); // إظهار لوحة تسجيل الدخول بدلاً من ذلك
           return;
         }
-        
+
         // إظهار لوحة التحكم
         adminPanel.style.display = 'block';
         document.body.style.overflow = 'hidden'; // منع التمرير في الصفحة الرئيسية
@@ -6552,13 +6489,13 @@
 
       // الحصول على المشاريع من التخزين المحلي أو من الذاكرة
       let projects = window.projects || loadProjectsFromLocalStorage() || [];
-      
+
       // إذا كانت المشاريع غير موجودة، قم بتهيئة مصفوفة فارغة
       if (!projects) {
         projects = [];
         window.projects = projects;
       }
-      
+
       // حذف المشاريع الوهمية الثلاثة عند أول تحميل للصفحة
       const removedFakeProjects = localStorage.getItem('removedFakeProjects');
       if (!removedFakeProjects && projects.length > 0) {
