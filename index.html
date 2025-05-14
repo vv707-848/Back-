@@ -65,23 +65,23 @@
     
         /* ===== تصميم بطاقات العقار المحسنة ===== */
     
-    /* تصميم البطاقة الأساسي */
+    /* تصميم البطاقة الأساسي - بسيط واحترافي */
     .real-estate-card {
       position: relative;
       background: #ffffff;
-      border-radius: 16px;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-      transition: all 0.4s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
       height: 100%;
       display: flex;
       flex-direction: column;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.03);
     }
     
     .real-estate-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
     
     /* بطاقة مميزة */
@@ -94,18 +94,18 @@
     .card-image-container {
       position: relative;
       overflow: hidden;
-      height: 220px;
+      height: 180px;
     }
     
     .card-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+      transition: transform 0.4s ease;
     }
     
     .real-estate-card:hover .card-image {
-      transform: scale(1.08);
+      transform: scale(1.05);
     }
     
     .image-overlay {
@@ -185,17 +185,15 @@
     }
     
     .property-badge {
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 4px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
-      animation: badgePulse 2s infinite;
     }
     
     .property-badge:hover {
@@ -225,19 +223,19 @@
     
     /* محتوى البطاقة */
     .card-content {
-      padding: 20px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+      background: #ffffff;
     }
     
     .property-title {
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 700;
-      color: var(--dark-text);
+      color: #1e293b;
       margin-top: 0;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       line-height: 1.4;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -3678,11 +3676,23 @@
         });
       }
 
-      // مستمع زر تطبيق الفلتر
+      // مستمع زر تطبيق الفلتر - تحسين الاستجابة وإضافة تأكيد بصري
       const applyFiltersBtn = document.getElementById("applyFilters");
       if (applyFiltersBtn) {
         applyFiltersBtn.addEventListener("click", function() {
-          applyFilters();
+          // إضافة تأثير بصري للزر
+          applyFiltersBtn.classList.add('btn-active');
+          applyFiltersBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i> جاري البحث...';
+          
+          // تطبيق الفلاتر بعد تأخير قصير لإظهار حالة التحميل
+          setTimeout(() => {
+            applyFilters();
+            applyFiltersBtn.classList.remove('btn-active');
+            applyFiltersBtn.innerHTML = '<i class="bi bi-search me-2"></i> بحث';
+            
+            // عرض رسالة تأكيد
+            showToast('تم تطبيق الفلاتر بنجاح', 'success');
+          }, 300);
         });
       }
 
@@ -3690,7 +3700,19 @@
       const resetFiltersBtn = document.getElementById("resetFilters");
       if (resetFiltersBtn) {
         resetFiltersBtn.addEventListener("click", function() {
-          resetFilters();
+          // إضافة تأثير بصري للزر
+          resetFiltersBtn.classList.add('btn-active');
+          resetFiltersBtn.innerHTML = '<i class="bi bi-arrow-repeat me-2 spin"></i> جاري الإعادة...';
+          
+          // إعادة ضبط الفلاتر بعد تأخير قصير
+          setTimeout(() => {
+            resetFilters();
+            resetFiltersBtn.classList.remove('btn-active');
+            resetFiltersBtn.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i> إعادة ضبط';
+            
+            // عرض رسالة تأكيد
+            showToast('تم إعادة ضبط الفلاتر', 'info');
+          }, 300);
         });
       }
 
@@ -3733,15 +3755,20 @@
       }
     });
 
-    // وظيفة تطبيق الفلاتر الحالية
+    // وظيفة تطبيق الفلاتر الحالية - إصلاح لضمان عمل الفلتر بشكل صحيح
     function applyFilters() {
-      // تحديث الفلاتر من حقول النموذج - استخدام المعرفات الصحيحة
-      const typeSelect = document.getElementById('propertyTypeFilter') || document.getElementById('propertyType');
-      const categorySelect = document.getElementById('propertyCategoryFilter') || document.getElementById('propertyCategory');
-      const neighborhoodInput = document.getElementById('neighborhoodFilter') || document.getElementById('propertyNeighborhood');
-      const minPriceInput = document.getElementById('minPriceFilter') || document.getElementById('minPrice');
-      const maxPriceInput = document.getElementById('maxPriceFilter') || document.getElementById('maxPrice');
-      const queryInput = document.getElementById('searchInput') || document.getElementById('searchQuery');
+      // تحديث الفلاتر من حقول النموذج بالمعرفات المحددة
+      const typeSelect = document.getElementById('propertyTypeFilter');
+      const categorySelect = document.getElementById('propertyCategoryFilter');
+      const neighborhoodInput = document.getElementById('neighborhoodFilter');
+      const minPriceInput = document.getElementById('minPriceFilter');
+      const maxPriceInput = document.getElementById('maxPriceFilter');
+      const queryInput = document.getElementById('searchInput');
+      
+      // طباعة معلومات الفلاتر للتأكد من عملها
+      console.log("عناصر الفلتر:", {
+        typeSelect, categorySelect, neighborhoodInput, minPriceInput, maxPriceInput, queryInput
+      });
       
       // تحديث القيم الحالية
       if (typeSelect) currentFilters.type = typeSelect.value;
@@ -3836,23 +3863,35 @@
       scrollToProperties();
     }
 
-    // وظيفة إعادة ضبط الفلاتر
+    // وظيفة إعادة ضبط الفلاتر - تم تحسينها لمعالجة مشكلة الاستجابة
     function resetFilters() {
-      // إعادة ضبط قيم عناصر الواجهة
-      // التأكد من استخدام معرفات العناصر الصحيحة
-      const elements = {
-        type: document.getElementById("propertyType") || document.getElementById("propertyTypeFilter"),
-        category: document.getElementById("propertyCategory") || document.getElementById("propertyCategoryFilter"),
-        neighborhood: document.getElementById("propertyNeighborhood") || document.getElementById("neighborhoodFilter"),
-        minPrice: document.getElementById("minPrice") || document.getElementById("minPriceFilter"),
-        maxPrice: document.getElementById("maxPrice") || document.getElementById("maxPriceFilter"),
-        query: document.getElementById("searchQuery") || document.getElementById("searchInput")
-      };
+      console.log("بدء إعادة ضبط الفلاتر...");
       
-      // إعادة ضبط قيم العناصر
-      Object.values(elements).forEach(element => {
-        if (element) element.value = "";
+      // الحصول على عناصر الفلتر باستخدام المعرفات المحددة
+      const typeSelect = document.getElementById("propertyTypeFilter");
+      const categorySelect = document.getElementById("propertyCategoryFilter");
+      const neighborhoodInput = document.getElementById("neighborhoodFilter");
+      const minPriceInput = document.getElementById("minPriceFilter");
+      const maxPriceInput = document.getElementById("maxPriceFilter");
+      const searchInput = document.getElementById("searchInput");
+      
+      console.log("عناصر الفلتر:", {
+        typeSelect, categorySelect, neighborhoodInput, minPriceInput, maxPriceInput, searchInput
       });
+      
+      // إعادة ضبط قيم العناصر بناءً على النوع
+      if (typeSelect && typeSelect.options && typeSelect.options.length > 0) {
+        typeSelect.value = typeSelect.options[0].value; // القيمة الافتراضية (الكل)
+      }
+      
+      if (categorySelect && categorySelect.options && categorySelect.options.length > 0) {
+        categorySelect.value = categorySelect.options[0].value; // القيمة الافتراضية (الكل)
+      }
+      
+      if (neighborhoodInput) neighborhoodInput.value = "";
+      if (minPriceInput) minPriceInput.value = "";
+      if (maxPriceInput) maxPriceInput.value = "";
+      if (searchInput) searchInput.value = "";
       
       // إعادة ضبط المتغيرات
       currentFilters = {
@@ -3863,10 +3902,12 @@
         maxPrice: '',
         query: ''
       };
-
+      
       // إعادة عرض جميع العقارات
       filteredList = [...properties];
       generatePropertyCards(filteredList);
+      
+      console.log("تم إعادة ضبط الفلاتر وعرض جميع العقارات:", filteredList.length);
     }
 
     // وظيفة تطبيق الفلاتر المحفوظة (تستخدم عند تحميل العقارات)
@@ -5238,37 +5279,25 @@
         `;
       }
 
-      // إنشاء بطاقة عقار بتصميم احترافي محسن
+      // إنشاء بطاقة عقار بتصميم احترافي ومبسط
       colDiv.innerHTML = `
         <div class="real-estate-card ${isFeatured ? 'featured-property' : ''}" data-category="${property.category || ''}">
           <div class="card-image-container">
-            <div class="card-image-wrapper">
-              <img src="${image}" alt="${property.title || 'عقار'}" class="card-image" loading="lazy">
-              <div class="image-shine"></div>
-            </div>
+            <img src="${image}" alt="${property.title || 'عقار'}" class="card-image" loading="lazy">
             
-            <div class="image-overlay-gradient"></div>
+            <div class="image-overlay"></div>
             
             <div class="property-label ${type === 'للإيجار' ? 'rent-label' : 'sale-label'}">
-              <span class="label-icon"><i class="bi ${type === 'للإيجار' ? 'bi-key' : 'bi-house-door'}"></i></span>
-              <span class="label-text">${type}</span>
+              <i class="bi ${type === 'للإيجار' ? 'bi-key' : 'bi-house-door'}"></i>
+              <span>${type}</span>
             </div>
             
             <div class="property-price">
-              <span class="price-amount">${price}</span>
+              ${price}
             </div>
             
-            <div class="property-badges-stack">
+            <div class="property-badges">
               ${badgesHTML}
-            </div>
-            
-            <div class="property-actions-floating">
-              <button class="floating-action share-btn" onclick="shareProperty('${property.title || ''}', '${price}')">
-                <i class="bi bi-share-fill"></i>
-              </button>
-              <button class="floating-action favorite-btn" onclick="toggleFavorite(this, '${property.id || ''}')">
-                <i class="bi bi-heart-fill"></i>
-              </button>
             </div>
           </div>
           
@@ -5280,52 +5309,38 @@
               <span>${property.location || ""}</span>
             </div>
             
-            <div class="property-specs">
+            <div class="property-features">
               ${area ? `
-                <div class="spec-item">
-                  <div class="spec-icon"><i class="bi bi-bounding-box"></i></div>
-                  <div class="spec-details">
-                    <span class="spec-value">${area}</span>
-                    <span class="spec-label">م²</span>
-                  </div>
+                <div class="feature">
+                  <i class="bi bi-bounding-box"></i>
+                  <span>${area} م²</span>
                 </div>
               ` : ''}
               
               ${rooms ? `
-                <div class="spec-item">
-                  <div class="spec-icon"><i class="bi bi-house-door"></i></div>
-                  <div class="spec-details">
-                    <span class="spec-value">${rooms}</span>
-                    <span class="spec-label">غرف</span>
-                  </div>
+                <div class="feature">
+                  <i class="bi bi-door-closed"></i>
+                  <span>${rooms} غرف</span>
                 </div>
               ` : ''}
               
               ${bathrooms ? `
-                <div class="spec-item">
-                  <div class="spec-icon"><i class="bi bi-droplet"></i></div>
-                  <div class="spec-details">
-                    <span class="spec-value">${bathrooms}</span>
-                    <span class="spec-label">حمامات</span>
-                  </div>
+                <div class="feature">
+                  <i class="bi bi-droplet"></i>
+                  <span>${bathrooms} حمامات</span>
                 </div>
               ` : ''}
             </div>
             
-            <div class="property-category-tag">
-              <i class="bi bi-tag-fill"></i>
-              <span>${property.category || ""}</span>
-            </div>
-            
-            <div class="card-action-buttons">
-              <a href="https://wa.me/966535342404?text=استفسار حول العقار: ${encodeURIComponent(property.title || '')}" class="primary-action-btn whatsapp-action" target="_blank">
+            <div class="card-actions">
+              <a href="https://wa.me/966535342404?text=استفسار حول العقار: ${encodeURIComponent(property.title || '')}" class="action-btn action-whatsapp" target="_blank" aria-label="تواصل عبر واتساب">
                 <i class="bi bi-whatsapp"></i>
                 <span>تواصل واتساب</span>
               </a>
               
-              <button class="secondary-action-btn" onclick="viewPropertyDetails('${property.key || property.id}')">
+              <button class="action-btn action-details" onclick="viewPropertyDetails('${property.key || property.id}')" aria-label="عرض تفاصيل العقار">
                 <i class="bi bi-eye-fill"></i>
-                <span>عرض التفاصيل</span>
+                <span>التفاصيل</span>
               </button>
             </div>
           </div>
@@ -5337,25 +5352,23 @@
         const styleEl = document.createElement('style');
         styleEl.id = 'property-card-styles';
         styleEl.textContent = `
-          /* تصميم بطاقة العقار الاحترافي المحسن بالكامل */
+          /* تصميم بطاقة العقار المبسط والاحترافي */
           .real-estate-card {
             background: #fff;
-            border-radius: 20px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             position: relative;
-            transition: all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition: all 0.3s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
-            border: none;
-            backface-visibility: hidden;
-            will-change: transform, box-shadow;
+            border: 1px solid rgba(0, 0, 0, 0.04);
           }
           
           .real-estate-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
           }
           
           /* العقارات المميزة */
@@ -5426,83 +5439,19 @@
           /* حاوية الصورة */
           .card-image-container {
             position: relative;
-            height: 230px;
+            height: 220px;
             overflow: hidden;
-          }
-          
-          .card-image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            transform: translateZ(0); /* Hardware acceleration for smoother animations */
-            backface-visibility: hidden;
-            will-change: transform; /* Optimize for animations */
           }
           
           .card-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform-origin: center;
+            transition: transform 0.5s ease;
           }
           
           .real-estate-card:hover .card-image {
-            transform: scale(1.15);
-          }
-          
-          /* تأثير اللمعان على الصورة */
-          .image-shine {
-            position: absolute;
-            top: -100%;
-            left: -200%;
-            width: 50%;
-            height: 200%;
-            background: linear-gradient(
-              to right,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(255, 255, 255, 0.3) 100%
-            );
-            transform: rotate(30deg);
-            transition: all 0.8s;
-            opacity: 0;
-          }
-          
-          .real-estate-card:hover .image-shine {
-            animation: shine 1.5s ease-in-out;
-          }
-          
-          @keyframes shine {
-            0% {
-              opacity: 0;
-              left: -200%;
-              top: -100%;
-            }
-            50% {
-              opacity: 0.7;
-            }
-            100% {
-              opacity: 0;
-              left: 200%;
-              top: 100%;
-            }
-          }
-          
-          .image-overlay-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.7) 100%);
-            opacity: 0.8;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-          }
-          
-          .real-estate-card:hover .image-overlay-gradient {
-            opacity: 0.9;
+            transform: scale(1.05);
           }
           
           .image-overlay {
@@ -6119,143 +6068,81 @@
           }
           
           /* مواصفات العقار */
-          .property-specs {
+          .property-features {
             display: flex;
             justify-content: space-between;
-            padding: 18px 0;
-            border-top: 1px solid rgba(0,0,0,0.06);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            margin-bottom: 18px;
-            background-color: rgba(248, 250, 252, 0.4);
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            padding: 15px 0;
+            margin: 10px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
           }
           
-          .real-estate-card:hover .property-specs {
-            background-color: rgba(243, 244, 246, 0.7);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) inset;
-          }
-          
-          .spec-item {
+          .feature {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
             flex: 1;
-            position: relative;
-            padding: 8px 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            padding: 5px;
           }
           
-          .spec-item:hover {
-            transform: translateY(-3px);
-          }
-          
-          .spec-item:not(:last-child):after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 20%;
-            height: 60%;
-            width: 1px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.08), rgba(0,0,0,0.01));
-          }
-          
-          .spec-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: rgba(var(--primary-rgb, 15, 76, 129), 0.08);
-            color: var(--primary-color, #0f4c81);
+          .feature i {
             font-size: 1.2rem;
+            color: var(--primary-color, #0f4c81);
             margin-bottom: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
           }
           
-          .real-estate-card:hover .spec-icon {
-            background: var(--primary-color, #0f4c81);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(var(--primary-rgb, 15, 76, 129), 0.2);
-          }
-          
-          .spec-details {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-          
-          .spec-value {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #1e293b;
-          }
-          
-          .spec-label {
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-top: 2px;
+          .feature span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4a5568;
           }
           
           /* أزرار الإجراءات */
-          .card-action-buttons {
+          .card-actions {
             display: flex;
-            gap: 12px;
-            margin-top: 18px;
+            gap: 8px;
+            margin-top: 15px;
           }
           
-          .primary-action-btn,
-          .secondary-action-btn {
+          .action-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.92rem;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
             border: none;
             outline: none;
             cursor: pointer;
             flex: 1;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            gap: 6px;
           }
           
-          .primary-action-btn {
+          .action-whatsapp {
             background: #25D366;
             color: white;
           }
           
-          .primary-action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(37, 211, 102, 0.2);
+          .action-whatsapp:hover {
+            background: #20bd5a;
           }
           
-          .secondary-action-btn {
-            background: #f8fafc;
+          .action-details {
+            background: #f1f5f9;
             color: #1e293b;
             border: 1px solid rgba(0, 0, 0, 0.05);
           }
           
-          .secondary-action-btn:hover {
-            transform: translateY(-3px);
-            background: #f1f5f9;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+          .action-details:hover {
+            background: #e2e8f0;
           }
           
-          .whatsapp-action i {
-            font-size: 1.2rem;
-            color: white;
-          }
-          
-          .secondary-action-btn i {
-            color: var(--primary-color, #0f4c81);
+          .action-whatsapp i, .action-details i {
             font-size: 1.1rem;
+            margin-left: 2px;
           }
           
           .property-spec-item i {
