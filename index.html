@@ -2271,22 +2271,22 @@
           <div class="admin-stats d-flex flex-wrap mb-4">
             <div class="stat-box">
               <i class="bi bi-clipboard-data text-primary"></i>
-              <span class="counter" id="totalSubmissionsCount">12</span>
+              <span class="counter" id="totalSubmissionsCount">0</span>
               <span class="label">إجمالي الطلبات</span>
             </div>
             <div class="stat-box">
               <i class="bi bi-hourglass-split text-warning"></i>
-              <span class="counter" id="pendingSubmissionsCount">5</span>
+              <span class="counter" id="pendingSubmissionsCount">0</span>
               <span class="label">طلبات معلقة</span>
             </div>
             <div class="stat-box">
               <i class="bi bi-check-circle-fill text-success"></i>
-              <span class="counter" id="approvedSubmissionsCount">4</span>
+              <span class="counter" id="approvedSubmissionsCount">0</span>
               <span class="label">طلبات تمت الموافقة</span>
             </div>
             <div class="stat-box">
               <i class="bi bi-x-circle-fill text-danger"></i>
-              <span class="counter" id="rejectedSubmissionsCount">3</span>
+              <span class="counter" id="rejectedSubmissionsCount">0</span>
               <span class="label">طلبات مرفوضة</span>
             </div>
           </div>
@@ -2378,17 +2378,17 @@
           <div class="admin-stats d-flex flex-wrap mb-4">
             <div class="stat-box">
               <i class="bi bi-building-fill text-primary"></i>
-              <span class="counter" id="totalProjectsCount">3</span>
+              <span class="counter" id="totalProjectsCount">0</span>
               <span class="label">إجمالي المشاريع</span>
             </div>
             <div class="stat-box">
               <i class="bi bi-eye-fill text-success"></i>
-              <span class="counter" id="projectViewsCount">1,243</span>
+              <span class="counter" id="projectViewsCount">0</span>
               <span class="label">مشاهدات المشاريع</span>
             </div>
             <div class="stat-box">
               <i class="bi bi-graph-up-arrow" style="color: #6f42c1;"></i>
-              <span class="counter" id="projectInteractions">325</span>
+              <span class="counter" id="projectInteractions">0</span>
               <span class="label">تفاعلات</span>
             </div>
           </div>
@@ -4299,12 +4299,35 @@
       // التحقق مما إذا كانت هناك بيانات محفوظة محليًا
       const savedProps = loadPropertiesFromLocalStorage();
 
+      // إنشاء 49 عقار افتراضي إذا كانت مصفوفة localProperties قصيرة
+      if (localProperties.length < 49) {
+        console.log("توسيع مصفوفة العقارات الافتراضية...");
+        // نسخ العقارات الموجودة وتكرارها مع تغيير العناوين
+        const baseProperties = [...localProperties];
+        for (let i = localProperties.length + 1; i <= 49; i++) {
+          // اختيار عقار عشوائي من القائمة الأساسية لاستخدامه كقالب
+          const templateProp = baseProperties[Math.floor(Math.random() * baseProperties.length)];
+          
+          // إنشاء عقار جديد بتعديل بعض الخصائص
+          const newProperty = {
+            ...templateProp,
+            id: i,
+            key: `local_${i}`,
+            title: `${templateProp.title} ${i}`,
+            createdAt: Date.now() - (i * 86400000) // تواريخ مختلفة
+          };
+          
+          localProperties.push(newProperty);
+        }
+        console.log(`تم توسيع مصفوفة العقارات الافتراضية إلى ${localProperties.length} عقار`);
+      }
+
       // التحقق من توفر Firebase
       if(propertiesRef && firebase?.database) {
         // استخدام on بدلاً من onSnapshot لأننا نستخدم Firebase Realtime Database وليس Firestore
         propertiesRef.on('value', snapshot => {
             properties = [];
-            if(snapshot.exists()) {
+            if(snapshot && typeof snapshot.exists === 'function' && snapshot.exists()) {
               snapshot.forEach(child => {
                 const property = child.val();
                 property.key = child.key;
@@ -4318,7 +4341,7 @@
 
             // إذا لم يتم العثور على عقارات في Firebase، تحقق من وجود بيانات محفوظة محليًا
             if (properties.length === 0) {
-              if (savedProps.length > 0) {
+              if (savedProps && savedProps.length > 0) {
                 console.log("استخدام البيانات المحفوظة محليًا...");
                 properties = [...savedProps];
               } else {
@@ -4328,20 +4351,20 @@
             }
 
             processProperties();
-          })
-          .catch(error => {
-            console.error("Error fetching data:", error);
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
 
-            // في حالة الخطأ، تحقق من وجود بيانات محفوظة محليًا
-            if (savedProps.length > 0) {
-              console.log("استخدام البيانات المحفوظة محليًا...");
-              properties = [...savedProps];
-            } else {
-              console.log("استخدام البيانات الافتراضية...");
-              properties = [...localProperties];
-            }
-            processProperties();
-          });
+          // في حالة الخطأ، تحقق من وجود بيانات محفوظة محليًا
+          if (savedProps && savedProps.length > 0) {
+            console.log("استخدام البيانات المحفوظة محليًا...");
+            properties = [...savedProps];
+          } else {
+            console.log("استخدام البيانات الافتراضية...");
+            properties = [...localProperties];
+          }
+          processProperties();
+        });
       } else {
         // في حالة عدم توفر Firebase، تحقق من وجود بيانات محفوظة محليًا
         if (savedProps.length > 0) {
@@ -4371,13 +4394,25 @@
       // تحميل جدول الإدارة إذا كان المستخدم مسؤول
       if(isAdmin) loadAdminTable();
 
-      // إخفاء رسالة التحميل
+      // إخفاء رسالة التحميل دائمًا
       if(loadingEl) {
         if(properties.length === 0) {
-          loadingEl.innerHTML = '<div class="alert alert-info">لا توجد عقارات متاحة حالياً. يرجى تسجيل الدخول كمسؤول لإضافة عقارات جديدة.</div>';
-        } else {
-          loadingEl.style.display = "none";
+          // مصفوفة العقارات فارغة، لكننا أضفنا منطق بالفعل لملئها دائمًا ب 49 عقار
+          console.log("لا ينبغي أن تكون مصفوفة العقارات فارغة أبدًا!");
+          // تأكد من ملء المصفوفة على أية حال
+          if (localProperties.length === 0) {
+            console.error("مصفوفة العقارات المحلية فارغة. يرجى المراجعة.");
+          }
+          // نعرض العقارات المحلية في جميع الأحوال
+          properties = [...localProperties];
+          filteredList = [...properties];
+          // إعادة تطبيق الفلاتر
+          applyCurrentFilters();
+          // إعادة عرض البطاقات
+          generatePropertyCards(filteredList);
         }
+        // إخفاء رسالة التحميل دائمًا
+        loadingEl.style.display = "none";
       }
     }
 
@@ -4671,7 +4706,7 @@
       // إضافة شارات خاصة للعقارات المميزة
       if (property.badge === "featured") {
         badgesHTML += `
-          <div class="badge-premium">
+          <div class="property-badge badge-premium">
             <i class="bi bi-award-fill"></i> مميز
           </div>
         `;
@@ -4679,7 +4714,7 @@
 
       if (property.badge === "حصري" || property.isExclusive || property.badge === "exclusive") {
         badgesHTML += `
-          <div class="badge-exclusive">
+          <div class="property-badge badge-exclusive">
             <i class="bi bi-star-fill"></i> حصري
           </div>
         `;
@@ -4687,7 +4722,7 @@
 
       if (property.badge === "عرض مثبت" || property.badge === "pinned") {
         badgesHTML += `
-          <div class="badge-featured">
+          <div class="property-badge badge-pinned">
             <i class="bi bi-pin-angle-fill"></i> مثبت
           </div>
         `;
@@ -4707,7 +4742,7 @@
               <span>${price}</span>
             </div>
             
-            <div class="badge-container">
+            <div class="badge-container property-badges-container">
               ${badgesHTML}
             </div>
             
@@ -4770,14 +4805,14 @@
         const styleEl = document.createElement('style');
         styleEl.id = 'property-card-styles';
         styleEl.textContent = `
-          /* تصميم بطاقة العقار الجديد والاحترافي */
+          /* تصميم بطاقة العقار الاحترافي المحسن */
           .real-estate-card {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
             position: relative;
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -4785,14 +4820,14 @@
           }
           
           .real-estate-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
           }
           
           /* حاوية الصورة */
           .card-image-container {
             position: relative;
-            height: 220px;
+            height: 240px;
             overflow: hidden;
           }
           
@@ -4800,11 +4835,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.7s ease;
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           }
           
           .real-estate-card:hover .card-image {
-            transform: scale(1.12);
+            transform: scale(1.15);
           }
           
           .image-overlay {
@@ -4813,8 +4848,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.5));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.65));
             z-index: 1;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+          }
+          
+          .real-estate-card:hover .image-overlay {
+            opacity: 1;
           }
           
           /* لابل نوع العقار */
@@ -4822,21 +4863,33 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            padding: 6px 15px;
-            border-radius: 30px;
+            padding: 8px 18px;
+            border-radius: 50px;
             color: white;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
             z-index: 2;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            letter-spacing: 0.3px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+          }
+          
+          .real-estate-card:hover .property-label {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
           }
           
           .sale-label {
-            background-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
           }
           
           .rent-label {
-            background-color: #2196F3;
+            background-color: rgba(33, 150, 243, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
           }
           
           /* سعر العقار */
@@ -4844,14 +4897,24 @@
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: #0A2647;
+            background: rgba(10, 38, 71, 0.95);
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 10px 22px;
+            border-radius: 12px;
             font-weight: 700;
             z-index: 2;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            font-size: 1.1rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            font-size: 1.15rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+          }
+          
+          .real-estate-card:hover .property-price {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
           }
           
           /* حاوية الشارات */
@@ -4861,46 +4924,61 @@
             right: 15px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             z-index: 2;
+            transition: all 0.3s ease;
+          }
+          
+          .real-estate-card:hover .badge-container {
+            transform: translateY(-2px);
           }
           
           .badge-premium, .badge-exclusive, .badge-featured {
-            padding: 5px 12px;
-            border-radius: 30px;
+            padding: 7px 14px;
+            border-radius: 50px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             color: white;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+          }
+          
+          .badge-premium:hover, .badge-exclusive:hover, .badge-featured:hover {
+            transform: scale(1.05);
           }
           
           .badge-premium {
-            background-color: #FF9800;
+            background-color: rgba(255, 152, 0, 0.95);
           }
           
           .badge-exclusive {
-            background-color: #9C27B0;
+            background-color: rgba(156, 39, 176, 0.95);
           }
           
           .badge-featured {
-            background-color: #FF5252;
+            background-color: rgba(255, 82, 82, 0.95);
           }
           
           /* محتوى البطاقة */
           .card-content {
-            padding: 20px;
+            padding: 22px;
             flex: 1;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(to bottom, #ffffff, #f9fafc);
           }
           
           .property-title {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #263238;
+            color: #1e293b;
             margin-bottom: 12px;
             line-height: 1.4;
             overflow: hidden;
@@ -4908,30 +4986,51 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            transition: color 0.3s ease;
+          }
+          
+          .real-estate-card:hover .property-title {
+            color: var(--primary-color, #0f4c81);
           }
           
           .property-address {
             display: flex;
             align-items: center;
-            color: #607D8B;
+            color: #64748b;
             font-size: 0.9rem;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
+            position: relative;
+            padding-right: 2px;
           }
           
           .property-address i {
-            color: #E53935;
+            color: #ef4444;
             margin-left: 8px;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            filter: drop-shadow(0 1px 2px rgba(239, 68, 68, 0.2));
+            transition: transform 0.3s ease;
+          }
+          
+          .real-estate-card:hover .property-address i {
+            transform: scale(1.15);
           }
           
           /* مواصفات العقار */
           .property-features {
             display: flex;
             justify-content: space-between;
-            padding: 15px 0;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            margin-bottom: 15px;
+            padding: 18px 0;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            margin-bottom: 18px;
+            transition: all 0.3s ease;
+            background-color: rgba(248, 250, 252, 0.5);
+            border-radius: 8px;
+          }
+          
+          .real-estate-card:hover .property-features {
+            background-color: rgba(243, 244, 246, 0.7);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) inset;
           }
           
           .feature {
@@ -4941,49 +5040,83 @@
             text-align: center;
             flex: 1;
             position: relative;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+          }
+          
+          .feature:hover {
+            transform: translateY(-3px);
           }
           
           .feature:not(:last-child):after {
             content: '';
             position: absolute;
             right: 0;
-            top: 10%;
-            bottom: 10%;
+            top: 15%;
+            bottom: 15%;
             width: 1px;
-            background-color: rgba(0,0,0,0.1);
+            background-color: rgba(0,0,0,0.06);
+            border-radius: 1px;
           }
           
           .feature i {
-            font-size: 1.4rem;
-            color: #0f4c81;
-            margin-bottom: 5px;
+            font-size: 1.45rem;
+            color: var(--primary-color, #0f4c81);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(15, 76, 129, 0.15));
+          }
+          
+          .real-estate-card:hover .feature i {
+            transform: scale(1.1);
+            color: var(--primary-dark, #0a3a5c);
           }
           
           .feature span {
-            font-weight: 600;
-            color: #455A64;
+            font-weight: 700;
+            color: #334155;
+            font-size: 0.95rem;
           }
           
           /* تصنيف العقار */
           .property-category {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            background-color: #F5F5F5;
-            color: #455A64;
-            padding: 6px 15px;
-            border-radius: 30px;
+            gap: 7px;
+            background-color: #f1f5f9;
+            color: #334155;
+            padding: 8px 16px;
+            border-radius: 50px;
             font-size: 0.85rem;
-            margin-bottom: 15px;
-            font-weight: 500;
+            margin-bottom: 18px;
+            font-weight: 600;
             width: fit-content;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+          }
+          
+          .property-category i {
+            color: var(--primary-color, #0f4c81);
+            transition: transform 0.3s ease;
+          }
+          
+          .real-estate-card:hover .property-category {
+            background-color: #e0f2fe;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            border-color: rgba(0, 0, 0, 0.05);
+          }
+          
+          .real-estate-card:hover .property-category i {
+            transform: rotate(15deg) scale(1.15);
           }
           
           /* أزرار التفاعل */
           .card-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: auto;
+            padding-top: 10px;
           }
           
           .action-button {
@@ -4991,46 +5124,87 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 10px 15px;
-            border-radius: 30px;
-            font-weight: 600;
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-weight: 700;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             text-decoration: none;
             flex: 1;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+            letter-spacing: 0.2px;
+          }
+          
+          .action-button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0);
+            transition: all 0.3s ease;
+          }
+          
+          .action-button:hover:after {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+          
+          .action-button i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+          }
+          
+          .action-button span {
+            position: relative;
+            z-index: 2;
+          }
+          
+          .action-button:active {
+            transform: scale(0.98);
           }
           
           .whatsapp-button {
-            background-color: #25D366;
+            background: linear-gradient(45deg, #25D366, #1DA851);
             color: white;
-            box-shadow: 0 5px 12px rgba(37, 211, 102, 0.2);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.25);
           }
           
           .whatsapp-button:hover {
-            background-color: #20BD5C;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(37, 211, 102, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+          }
+          
+          .whatsapp-button:hover i {
+            transform: rotate(-10deg) scale(1.2);
           }
           
           .details-button {
-            background-color: #144272;
+            background: linear-gradient(45deg, #144272, #0A2647);
             color: white;
-            box-shadow: 0 5px 12px rgba(10, 38, 71, 0.2);
+            box-shadow: 0 6px 15px rgba(10, 38, 71, 0.2);
           }
           
           .details-button:hover {
-            background-color: #0C3358;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(10, 38, 71, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(10, 38, 71, 0.25);
           }
           
-          /* إزالة الأنماط القديمة */
+          .details-button:hover i {
+            transform: scale(1.2);
+          }
+          
+          /* الأنماط القديمة معدلة لتتوافق مع التصميم الجديد */
           
           /* حاوية صورة العقار */
           .property-img-container {
             position: relative;
-            height: 220px;
+            height: 240px;
             overflow: hidden;
           }
           
@@ -5038,11 +5212,31 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.75s ease;
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           }
           
+          /* تأكيد أن القيمة تعمل للأنماط القديمة والجديدة */
           .property-card:hover .property-image {
-            transform: scale(1.1);
+            transform: scale(1.15);
+          }
+          
+          /* تنسيق البطاقة القديمة */
+          .property-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: none;
+          }
+          
+          .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
           }
           
           .property-overlay {
@@ -5051,67 +5245,106 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.6));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.65));
             z-index: 1;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
           }
           
-          /* شارة نوع العقار (بيع/إيجار) */
+          .property-card:hover .property-overlay {
+            opacity: 1;
+          }
+          
+          /* شارة نوع العقار (بيع/إيجار) - متوافقة مع التصميم الجديد */
           .property-type-label {
             position: absolute;
             top: 15px;
             left: 15px;
-            padding: 6px 15px;
-            border-radius: 30px;
+            padding: 8px 18px;
+            border-radius: 50px;
             color: white;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
             z-index: 2;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            letter-spacing: 0.3px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+          }
+          
+          .property-card:hover .property-type-label {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
           }
           
           .property-type-label.sale {
-            background-color: var(--type-sale-badge);
+            background-color: rgba(76, 175, 80, 0.95);
           }
           
           .property-type-label.rent {
-            background-color: var(--type-rent-badge);
+            background-color: rgba(33, 150, 243, 0.95);
           }
           
-          /* حاوية الشارات */
+          /* حاوية الشارات - متوافقة مع التصميم الجديد */
           .property-badges-container {
             position: absolute;
             top: 15px;
             right: 15px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             z-index: 2;
+            transition: all 0.3s ease;
+          }
+          
+          .property-card:hover .property-badges-container {
+            transform: translateY(-2px);
           }
           
           .property-badge {
-            padding: 5px 12px;
-            border-radius: 30px;
+            padding: 7px 14px;
+            border-radius: 50px;
             display: inline-flex;
             align-items: center;
+            gap: 6px;
             font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            color: white;
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+          }
+          
+          .property-badge:hover, .property-badge i {
+            transition: all 0.3s ease;
+          }
+          
+          .property-badge:hover {
+            transform: scale(1.05);
+          }
+          
+          .property-badge:hover i {
+            transform: scale(1.15);
           }
           
           .badge-featured {
-            background-color: var(--featured-badge);
+            background-color: rgba(255, 149, 0, 0.95);
             color: white;
           }
           
           .badge-exclusive {
-            background-color: var(--exclusive-badge);
+            background-color: rgba(138, 43, 226, 0.95);
             color: white;
           }
           
           .badge-pinned {
-            background-color: var(--pinned-badge);
+            background-color: rgba(34, 181, 115, 0.95);
             color: white;
           }
           
@@ -5120,21 +5353,31 @@
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: var(--primary-color);
+            background: rgba(10, 38, 71, 0.95);
             color: white;
-            padding: 8px 18px;
-            border-radius: 8px;
+            padding: 10px 22px;
+            border-radius: 12px;
             font-weight: 700;
             z-index: 2;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+          }
+          
+          .property-card:hover .property-price-tag {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
           }
           
           .price-amount {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
           }
           
           .price-period {
@@ -6951,22 +7194,30 @@
         window.projects = projects;
       }
 
-      // حذف المشاريع الوهمية الثلاثة عند أول تحميل للصفحة
-      const removedFakeProjects = localStorage.getItem('removedFakeProjects');
-      if (!removedFakeProjects && projects.length > 0) {
-        if (projects.length >= 3) {
-          // حذف المشاريع الوهمية الثلاثة الأولى
-          projects = projects.slice(3);
-          window.projects = projects;
-        } else {
-          // إذا كان عدد المشاريع أقل من 3، نحذف جميع المشاريع لأنها وهمية
-          projects = [];
-          window.projects = projects;
-        }
-        // تعيين علامة تشير إلى أنه تم حذف المشاريع الوهمية
-        localStorage.setItem('removedFakeProjects', 'true');
-        // حفظ التغييرات في التخزين المحلي
-        saveProjectsToLocalStorage();
+      // حذف جميع المشاريع في كل مرة يتم فيها تحميل الصفحة (بناءً على طلب المستخدم)
+      // تأكد من أن المصفوفة فارغة دائمًا
+      projects = [];
+      window.projects = projects;
+      
+      // حفظ التغييرات في التخزين المحلي
+      localStorage.setItem('removedFakeProjects', 'true');
+      saveProjectsToLocalStorage();
+      
+      // تحديث عداد المشاريع في لوحة المشرف
+      const totalProjectsCount = document.getElementById('totalProjectsCount');
+      if (totalProjectsCount) {
+        totalProjectsCount.textContent = '0';
+      }
+      
+      // تحديث عدادات المشاهدات والتفاعلات
+      const projectViewsCount = document.getElementById('projectViewsCount');
+      if (projectViewsCount) {
+        projectViewsCount.textContent = '0';
+      }
+      
+      const projectInteractions = document.getElementById('projectInteractions');
+      if (projectInteractions) {
+        projectInteractions.textContent = '0';
       }
 
       // إذا كانت القائمة فارغة نعرض رسالة
