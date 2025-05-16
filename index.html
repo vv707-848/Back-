@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -69,19 +69,18 @@
     .real-estate-card {
       position: relative;
       background: #ffffff;
-      border-radius: 12px; /* زيادة استدارة الزوايا */
+      border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       transition: all 0.3s ease;
       height: 100%;
       display: flex;
       flex-direction: column;
-      border: 1px solid rgba(0, 0, 0, 0.05); /* حدود أفتح قليلاً */
-      padding: 0; /* إزالة الهوامش الداخلية الافتراضية */
+      border: 1px solid rgba(0, 0, 0, 0.03);
     }
     
     .real-estate-card:hover {
-      transform: scale(1.02); /* تأثير التكبير بدلاً من الانتقال للأعلى */
+      transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
     
@@ -156,31 +155,23 @@
       position: absolute;
       bottom: 15px;
       left: 15px;
-      background: var(--accent-color); /* لون برتقالي أو أخضر */
-      color: white;
-      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--primary-color);
+      padding: 8px 15px;
       border-radius: 30px;
       font-weight: 700;
-      font-size: 1.2rem; /* خط أكبر للسعر */
+      font-size: 0.95rem;
       z-index: 2;
       display: flex;
       align-items: center;
       gap: 5px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       backdrop-filter: blur(4px);
-      border: none;
-      letter-spacing: 0.5px;
-      transition: all 0.2s ease;
-    }
-    
-    .real-estate-card:hover .property-price {
-      transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.7);
     }
     
     .property-price i {
-      color: white;
-      font-size: 1rem;
+      color: var(--accent-color);
     }
     
     .badge-container {
@@ -240,11 +231,11 @@
     }
     
     .property-title {
-      font-size: 1.1rem; /* زيادة حجم الخط */
-      font-weight: 600; /* خط متوسط الوزن */
+      font-size: 1rem;
+      font-weight: 700;
       color: #1e293b;
-      margin-top: 5px;
-      margin-bottom: 10px;
+      margin-top: 0;
+      margin-bottom: 8px;
       line-height: 1.4;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -262,8 +253,8 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 15px;
-      font-size: 0.85rem; /* خط أصغر للعنوان */
-      color: #64748b; /* لون أفتح للتفاصيل الثانوية */
+      font-size: 0.9rem;
+      color: var(--light-text);
     }
     
     .location-icon {
@@ -274,31 +265,33 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 15px;
-      padding: 10px 5px;
+      padding: 12px;
+      background-color: var(--secondary-color);
       border-radius: 12px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
     }
     
     .feature {
       display: flex;
-      align-items: center; /* تغيير إلى صف أفقي */
-      gap: 6px;
-      font-size: 0.8rem; /* خط أصغر للتفاصيل الثانوية */
-      color: #64748b; /* لون فاتح للنص الثانوي */
-      padding: 5px;
-      border-radius: 6px;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.85rem;
+      background-color: rgba(255,255,255,0.7);
+      padding: 8px 12px;
+      border-radius: 10px;
       transition: all 0.3s ease;
-      font-weight: 400; /* خط عادي للتفاصيل الثانوية */
     }
     
     .feature:hover {
-      background-color: var(--property-feature-highlight);
-      transform: translateY(-1px);
+      background-color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
     
     .feature i {
       color: var(--primary-color);
-      font-size: 0.9rem;
-      opacity: 0.75; /* جعل الأيقونات أقل بروزًا */
+      font-size: 1rem;
     }
     
     .property-category {
@@ -2152,16 +2145,16 @@
   <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-database-compat.js"></script>
   <script>
-    // إعدادات Firebase (تأكد من مطابقتها لبيانات مشروعك)
+    // إعدادات Firebase الجديدة
     const firebaseConfig = {
-      apiKey: "AIzaSyCiNJYUT06jZrlzn_Q7LXmkStTgVbeRk0U",
-      authDomain: "aqrati-taif.firebaseapp.com",
-      databaseURL: "https://aqrati-taif-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "aqrati-taif",
-      storageBucket: "aqrati-taif.appspot.com",
-      messagingSenderId: "729968735852",
-      appId: "1:729968735852:web:4779366823353325efca49",
-      measurementId: "G-37C6RY0378"
+      apiKey: "AIzaSyDrr0lGQI9TuM6wp5nxGwsTDFR_tasWqFI",
+      authDomain: "aqareek-1.firebaseapp.com",
+      databaseURL: "https://aqareek-1-default-rtdb.firebaseio.com",
+      projectId: "aqareek-1",
+      storageBucket: "aqareek-1.firebasestorage.app",
+      messagingSenderId: "934804974255",
+      appId: "1:934804974255:web:f56ce236afe0010f85425a",
+      measurementId: "G-H0B1D7L4W9"
     };
 
     // وظائف حفظ واسترجاع العقارات من التخزين المحلي
@@ -2308,6 +2301,81 @@
     // التأكد من وجود اتصال بقاعدة البيانات
     firebase?.database?.().goOnline();
   </script>
+  
+  <!-- أنماط إضافية لتحسين بطاقات العقارات -->
+  <style>
+    .real-estate-card { 
+      background:#fff; 
+      border-radius:12px; 
+      box-shadow:0 3px 10px rgba(0,0,0,0.08); 
+      display:flex; 
+      flex-direction:column; 
+      transition:all 0.4s ease; 
+      position:relative; 
+      overflow:hidden; 
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .real-estate-card:hover { 
+      transform:translateY(-6px); 
+      box-shadow:0 8px 25px rgba(0,0,0,0.15); 
+    }
+    .card-image { 
+      width:100%; 
+      aspect-ratio:16/9; 
+      object-fit:cover; 
+      transition: transform 0.7s ease;
+    }
+    .real-estate-card:hover .card-image {
+      transform: scale(1.05);
+    }
+    .card-price-badge { 
+      position:absolute; 
+      top:15px; 
+      right:15px; 
+      background:#4caf50; 
+      color:#fff; 
+      padding:0.5rem 1rem; 
+      font-size:1.1rem; 
+      font-weight:800; 
+      border-radius:8px; 
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .card-body { 
+      padding:1.25rem; 
+      display:flex; 
+      flex-direction:column; 
+      gap:0.7rem; 
+      flex:1; 
+    }
+    .card-title { 
+      font-size:1.3rem; 
+      font-weight:800; 
+      color:#0f4c81; 
+      margin:0; 
+      line-height: 1.4;
+    }
+    .card-features { 
+      margin-top:auto; 
+      display:flex; 
+      gap:1.5rem; 
+      font-size:0.9rem; 
+      color:#555; 
+      font-weight: 600;
+    }
+    .card-features i {
+      color: #0f4c81;
+    }
+    .real-estate-card .btn {
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+    }
+    .real-estate-card .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
   <!-- الهيدر -->
@@ -2344,18 +2412,7 @@
         <input type="password" id="passwordInput" class="form-control" placeholder="اكتب كلمة المرور">
       </div>
     </div>
-    <!-- حقل مخفي لرمز CSRF -->
-    <input type="hidden" id="csrfToken" name="csrfToken" value="">
-    <!-- مؤشر تحميل وزر تسجيل الدخول -->
-    <div class="mb-3">
-      <div class="d-flex align-items-center" id="loginSpinner" style="display: none !important;">
-        <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
-          <span class="visually-hidden">جاري التحميل...</span>
-        </div>
-        <span>جاري التحقق...</span>
-      </div>
-    </div>
-    <button id="loginBtn" class="btn w-100" onclick="performLogin()" style="background-color: var(--primary-color); color: white; font-weight: 600; padding: 12px;">
+    <button class="btn w-100" onclick="performLogin()" style="background-color: var(--primary-color); color: white; font-weight: 600; padding: 12px;">
       <i class="bi bi-box-arrow-in-left me-2"></i>دخول
     </button>
   </div>
@@ -2466,7 +2523,7 @@
                     <i class="bi bi-currency-dollar me-1 text-primary"></i> السعر
                   </label>
                   <div class="input-group">
-                    <input type="text" id="price" class="form-control" placeholder="اكتب السعر بالأرقام" required>
+                    <input type="text" id="price" class="form-control" placeholder="مثلاً: 500000" pattern="^[0-9]+$" title="يجب أن يكون رقماً فقط" required>
                     <span class="input-group-text">ريال</span>
                   </div>
                 </div>
@@ -3032,70 +3089,7 @@
           </div>
         </div>
 
-        <div class="col-md-4 mb-3">
-          <label class="form-label">الحي</label>
-          <div class="input-group">
-            <span class="input-group-text bg-white border-end-0">
-              <i class="bi bi-geo-alt text-primary"></i>
-            </span>
-            <select id="neighborhoodFilter" class="form-select border-start-0 ps-0">
-              <option value="">جميع الأحياء</option>
-              <option value="العزيزية">العزيزية</option>
-              <option value="الشهداء">الشهداء</option>
-              <option value="النزهة">النزهة</option>
-              <option value="الفيصلية">الفيصلية</option>
-              <option value="شهار">شهار</option>
-              <option value="السلامة">السلامة</option>
-              <option value="الوسام">الوسام</option>
-              <option value="الحلقة الشرقية">الحلقة الشرقية</option>
-              <option value="الحلقة الغربية">الحلقة الغربية</option>
-              <option value="جبرة">جبرة</option>
-              <option value="عودة">عودة</option>
-              <option value="الشرقية">الشرقية</option>
-              <option value="النسيم">النسيم</option>
-              <option value="المثناة">المثناة</option>
-              <option value="القيم">القيم</option>
-              <option value="المطار">المطار</option>
-              <option value="الحوية">الحوية</option>
-              <option value="السرور">السرور</option>
-              <option value="السيل الكبير">السيل الكبير</option>
-              <option value="السيل الصغير">السيل الصغير</option>
-              <option value="الشفا">الشفا</option>
-              <option value="وادي وج">وادي وج</option>
-              <option value="الشفا الشرقي">الشفا الشرقي</option>
-              <option value="الشفا الغربي">الشفا الغربي</option>
-              <option value="الفرع">الفرع</option>
-              <option value="حدا">حدا</option>
-              <option value="الهدا">الهدا</option>
-              <option value="القمرية">القمرية</option>
-              <option value="السحيلي">السحيلي</option>
-              <option value="الضباط">الضباط</option>
-              <option value="الواصلية">الواصلية</option>
-              <option value="ولي العهد">ولي العهد</option>
-              <option value="الريان">الريان</option>
-              <option value="الشروق">الشروق</option>
-              <option value="الروضة">الروضة</option>
-              <option value="البديع">البديع</option>
-              <option value="المنتزه">المنتزه</option>
-              <option value="القادسية">القادسية</option>
-              <option value="العقيق">العقيق</option>
-              <option value="مخطط قرمة">مخطط قرمة</option>
-              <option value="الربوة">الربوة</option>
-              <option value="المشاعر">المشاعر</option>
-              <option value="الضيافة">الضيافة</option>
-              <option value="العوالي">العوالي</option>
-              <option value="أشراق">أشراق</option>
-              <option value="شرق الفيصلية">شرق الفيصلية</option>
-              <option value="مخطط الحمراء">مخطط الحمراء</option>
-              <option value="ريحه">ريحه</option>
-              <option value="مخطط الزايدي">مخطط الزايدي</option>
-              <option value="السداد">السداد</option>
-              <option value="السيل الجنوبي">السيل الجنوبي</option>
-              <option value="الشهد">الشهد</option>
-              <option value="الرفاع">الرفاع</option>
-            </select>
-          </div>
-        </div>
+        <input type="hidden" id="neighborhoodFilter" value="">
       </div>
 
       <div class="mb-3">
@@ -3364,7 +3358,7 @@
                       <i class="bi bi-whatsapp text-success"></i>
                     </span>
                     <span class="input-group-text bg-white border-start-0 border-end-0">+966</span>
-                    <input type="text" class="form-control border-start-0 ps-0" id="clientWhatsapp" value="535342404" placeholder="535342404" required>
+                    <input type="text" class="form-control border-start-0 ps-0" id="clientWhatsapp" value="535342404" placeholder="535342404" pattern="^[0-9]{9}$" title="أدخل رقم واتساب صحيح مكون من 9 أرقام بدون صفر في البداية" required>
                   </div>
                 </div>
 
@@ -3388,48 +3382,8 @@
                     <input type="text" class="form-control border-start-0 ps-0" id="clientPropTitle" placeholder="مثال: فيلا فاخرة في حي الشهداء" required>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="clientPropNeighborhood" class="form-label">الحي <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0">
-                      <i class="bi bi-geo-alt text-primary"></i>
-                    </span>
-                    <select class="form-select border-start-0 ps-0" id="clientPropNeighborhood" required>
-                      <option value="">اختر الحي</option>
-                      <option value="العزيزية">العزيزية</option>
-                      <option value="الشهداء">الشهداء</option>
-                      <option value="النزهة">النزهة</option>
-                      <option value="الفيصلية">الفيصلية</option>
-                      <option value="شهار">شهار</option>
-                      <option value="السلامة">السلامة</option>
-                      <option value="الوسام">الوسام</option>
-                      <option value="الحلقة الشرقية">الحلقة الشرقية</option>
-                      <option value="الحلقة الغربية">الحلقة الغربية</option>
-                      <option value="جبرة">جبرة</option>
-                      <option value="عودة">عودة</option>
-                      <option value="الشرقية">الشرقية</option>
-                      <option value="النسيم">النسيم</option>
-                      <option value="المثناة">المثناة</option>
-                      <option value="الشفا">الشفا</option>
-                      <option value="السيل الصغير">السيل الصغير</option>
-                      <option value="السيل الكبير">السيل الكبير</option>
-                      <option value="وادي وج">وادي وج</option>
-                      <option value="الروضة">الروضة</option>
-                      <option value="المنتزه">المنتزه</option>
-                      <option value="الفهد">الفهد</option>
-                      <option value="الفيصلية الجديدة">الفيصلية الجديدة</option>
-                      <option value="جوهرة الطائف">جوهرة الطائف</option>
-                      <option value="الهدا">الهدا</option>
-                      <option value="الشرق">الشرق</option>
-                      <option value="الخالدية">الخالدية</option>
-                      <option value="الحوية">الحوية</option>
-                      <option value="القيم">القيم</option>
-                      <option value="المطار">المطار</option>
-                      <option value="الحوية">الحوية</option>
-                      <option value="السرور">السرور</option>
-                      <option value="السيل الكبير">السيل الكبير</option>
-                    </select>
-                  </div>
+                <!-- تم حذف خانة الحي بناءً على الطلب -->
+                <input type="hidden" id="clientPropNeighborhood" value="غير محدد" />
                 </div>
                 <div class="col-md-6">
                   <label for="clientPropCategory" class="form-label">القسم <span class="text-danger">*</span></label>
@@ -3565,34 +3519,10 @@
   <script>
     const ADMIN_USERNAME = "IVL511";
     const ADMIN_PASSWORD = "WA055364";
-    // رمز CSRF للحماية من هجمات تزوير الطلبات
-    const CSRF_TOKEN = generateCSRFToken();
-    // عدد محاولات تسجيل الدخول المسموحة
-    const MAX_LOGIN_ATTEMPTS = 5;
 
     let properties = [];
     let isAdmin = false;
     let filteredList = [];
-    let loginAttempts = 0;
-    
-    // دالة لتوليد رمز CSRF عشوائي
-    function generateCSRFToken() {
-      const randomPart = Math.random().toString(36).substring(2, 15);
-      const timePart = new Date().getTime().toString(36);
-      const token = `${randomPart}_${timePart}`;
-      sessionStorage.setItem('csrfToken', token);
-      return token;
-    }
-    
-    // دالة لحساب تجزئة آمنة لكلمة المرور
-    async function hashPassword(password) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(password);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      return hashHex;
-    }
     let activeCategoryId = "category-all";
 
     // متغيرات لحفظ الفلاتر الحالية
@@ -3611,15 +3541,6 @@
     let currentSubmissionsPage = 1;
 
     window.addEventListener("DOMContentLoaded", function() {
-      // تعيين رمز CSRF في نموذج تسجيل الدخول
-      const csrfTokenInput = document.getElementById("csrfToken");
-      if (csrfTokenInput) {
-        csrfTokenInput.value = CSRF_TOKEN;
-      }
-      
-      // استرجاع عدد محاولات تسجيل الدخول من sessionStorage
-      loginAttempts = parseInt(sessionStorage.getItem('loginAttempts') || '0');
-      
       // تحقق من حالة تسجيل الدخول المحفوظة
       checkLoginStatus();
 
@@ -3768,9 +3689,20 @@
       }
 
       // مستمع زر إضافة عقار من قبل العميل
-      document.getElementById("submitClientProperty").addEventListener("click", function() {
+      document.getElementById("submitClientProperty").addEventListener("click", submitClientPropertyForm);
+      
+      function submitClientPropertyForm() {
+        const title = document.getElementById("clientPropTitle").value.trim();
+        const whatsapp = document.getElementById("clientWhatsapp").value.trim();
+        if (!title || !/^[0-9]{9}$/.test(whatsapp)) {
+          showToast("الرجاء ملء الحقول بشكل صحيح","warning");
+          return;
+        }
         submitClientProperty();
-      });
+        showToast("تم إرسال الطلب بنجاح","success");
+        bootstrap.Modal.getInstance(document.getElementById("clientPropertyModal")).hide();
+        fetchClientSubmissions();
+      }
 
       // إضافة مستمع لزر الإنشاء الجديد
       document.getElementById("newPropertyBtn").addEventListener("click", function() {
@@ -3893,43 +3825,20 @@
         }
       }
 
-      // تطبيق فلتر البحث النصي - تم تحسينه
+      // تطبيق فلتر البحث النصي
       if (currentFilters.query && currentFilters.query.trim() !== "") {
-        console.log("جاري البحث عن النص:", currentFilters.query);
-
         const query = currentFilters.query.toLowerCase();
-        const queryParts = query.split(/\s+/).filter(part => part.length > 1); // تقسيم مصطلح البحث إلى كلمات
-        
-        if (queryParts.length > 0) {
-          filteredList = filteredList.filter(p => {
-            if (!p) return false;
-            
-            // تجميع جميع البيانات القابلة للبحث في نص واحد
-            const title = (p.title || "").toLowerCase();
-            const location = (p.location || "").toLowerCase();
-            const price = (p.price || "").toString().toLowerCase();
-            const category = (p.category || "").toLowerCase();
-            const description = (p.description || "").toLowerCase();
-            const type = (p.type || "").toLowerCase();
-            
-            // البحث عن تطابق كامل للنص
-            const fullText = `${title} ${location} ${price} ${category} ${description} ${type}`;
-            
-            // نجاح البحث إما إذا كان النص كاملاً موجوداً أو إذا تطابقت معظم الكلمات الفردية
-            if (fullText.includes(query)) return true;
-            
-            // تطابق أي من أجزاء مصطلح البحث
-            let matchCount = 0;
-            for (const part of queryParts) {
-                if (fullText.includes(part)) matchCount++;
-            }
-            
-            // نعتبر أنه نجح إذا تطابق 50% على الأقل من أجزاء البحث
-            return matchCount > 0 && matchCount >= Math.ceil(queryParts.length * 0.5);
-          });
-        }
-        
-        console.log("عدد النتائج بعد البحث النصي:", filteredList.length);
+        filteredList = filteredList.filter(p => {
+          const searchableText = [
+            p.title, 
+            p.location, 
+            p.price?.toString(), 
+            p.category, 
+            p.description
+          ].filter(Boolean).join(" ").toLowerCase();
+
+          return searchableText.includes(query);
+        });
       }
 
       // عرض النتائج
@@ -4701,84 +4610,38 @@
     }
 
     function updateVisitorCount() {
-      // تحديث عداد الزوار بشكل ديناميكي
+      // عرض عدد ثابت 10,000+ وتخزينه أيضاً في Firebase
       const visitorCountElement = document.getElementById("visitorCount");
-      
-      // جلب عدد الزوار من sessionStorage أو إنشاء قيمة افتراضية
-      let visitorCount = parseInt(sessionStorage.getItem("visitorCount") || "15723");
-      
-      // زيادة العداد عند زيارة الموقع (مرة واحدة فقط لكل جلسة)
-      if (!sessionStorage.getItem("visitorIncremented")) {
-        visitorCount += 1;
-        sessionStorage.setItem("visitorIncremented", "true");
-        sessionStorage.setItem("visitorCount", visitorCount.toString());
-        
-        // محاولة حفظ البيانات في الخادم إذا كان متاحًا
-        try {
-          fetch('/api/visitors/update', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ count: visitorCount })
-          }).catch(() => {
-            console.log("تعذر تحديث العداد في الخادم، تم التخزين محليًا فقط");
-          });
-        } catch (e) {
-          console.log("تعذر الاتصال بالخادم");
-        }
-      }
-      
-      // تنسيق العدد مع فاصلة للآلاف
-      const formattedCount = visitorCount.toLocaleString('ar-SA');
-      
       if (visitorCountElement) {
-        visitorCountElement.innerHTML = `<i class="bi bi-people-fill me-1"></i> عدد الزائرين: ${formattedCount}`;
+        visitorCountElement.innerHTML = `<i class="bi bi-people-fill"></i> عدد الزائرين: 15,723+`;
       }
 
-      // حفظ الرقم في Firebase إذا كان متاحًا
+      // حفظ الرقم في Firebase
       if (visitorsRef) {
-        visitorsRef.set({ count: visitorCount }).catch(err => {
+        visitorsRef.set({ count: 15723 }).catch(err => {
           console.error("Error setting visitor count:", err);
         });
 
         // تحديث الإحصائيات في لوحة المدير إذا كانت ظاهرة
         const adminVisitorsCountEl = document.getElementById("adminVisitorsCount");
         if (adminVisitorsCountEl) {
-          adminVisitorsCountEl.textContent = formattedCount;
+          adminVisitorsCountEl.textContent = "15,723+";
+        }
+      } else {
+        // في حالة عدم توفر Firebase
+        if (visitorCountElement) {
+          visitorCountElement.innerHTML = `<i class="bi bi-people-fill"></i> عدد الزائرين: 15,723+`;
         }
       }
     }
 
     function checkLoginStatus() {
-      // التحقق من الجلسة في sessionStorage أولاً (الأكثر أمانًا)، ثم localStorage كاحتياطي
-      const sessionStatus = sessionStorage.getItem("isAdmin");
-      const localStatus = localStorage.getItem("isAdmin");
-      
-      if (sessionStatus === "true") {
+      const storedStatus = localStorage.getItem("isAdmin");
+      if(storedStatus === "true") {
         isAdmin = true;
-        document.getElementById("loginLogoutBtn").innerHTML = '<i class="bi bi-box-arrow-right"></i> تسجيل خروج';
-        showAdminPanel();
-        
-        // التحقق من صلاحية الجلسة (مدة 4 ساعات)
-        const loginTime = parseInt(sessionStorage.getItem("adminLoginTime") || '0');
-        const currentTime = Date.now();
-        const sessionDuration = 4 * 60 * 60 * 1000; // 4 ساعات بالمللي ثانية
-        
-        if (loginTime > 0 && (currentTime - loginTime) > sessionDuration) {
-          // تسجيل الخروج تلقائيًا إذا انتهت مدة الجلسة
-          showToast("انتهت مدة الجلسة. يرجى تسجيل الدخول مرة أخرى", "info");
-          performLogout();
-        }
-      } else if (localStatus === "true") {
-        // ترحيل البيانات من localStorage إلى sessionStorage
-        isAdmin = true;
-        sessionStorage.setItem("isAdmin", "true");
-        sessionStorage.setItem("adminLoginTime", Date.now().toString());
         document.getElementById("loginLogoutBtn").innerHTML = '<i class="bi bi-box-arrow-right"></i> تسجيل خروج';
         showAdminPanel();
       }
-      
-      // استرجاع قيمة عداد محاولات تسجيل الدخول من sessionStorage
-      loginAttempts = parseInt(sessionStorage.getItem('loginAttempts') || '0');
     }
 
     function showAdminPanel() {
@@ -4791,82 +4654,29 @@
       document.getElementById("adminPanel").style.display = "none";
     }
 
-    async function performLogin() {
+    function performLogin() {
       const username = document.getElementById("usernameInput").value;
       const password = document.getElementById("passwordInput").value;
-      const csrfTokenInput = document.getElementById("csrfToken");
-      
-      // التحقق من إدخال البيانات
+
       if (!username || !password) {
         showToast("يرجى إدخال اسم المستخدم وكلمة المرور", "warning");
         return;
       }
-      
-      // التحقق من رمز الـ CSRF
-      if (csrfTokenInput && csrfTokenInput.value !== sessionStorage.getItem('csrfToken')) {
-        showToast("خطأ في جلسة التصفح، يرجى تحديث الصفحة", "warning");
-        return;
-      }
-      
-      // التحقق من عدد محاولات تسجيل الدخول
-      if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-        const remainingTime = parseInt(sessionStorage.getItem('loginLockExpiry') || '0') - Date.now();
-        if (remainingTime > 0) {
-          const minutes = Math.ceil(remainingTime / 60000);
-          showToast(`تم تجاوز الحد المسموح من المحاولات. يرجى المحاولة بعد ${minutes} دقيقة`, "danger");
-          return;
-        } else {
-          // إعادة تعيين العداد بعد انتهاء فترة الحظر
-          loginAttempts = 0;
-          sessionStorage.removeItem('loginLockExpiry');
-        }
-      }
-      
-      // التحقق من صحة بيانات تسجيل الدخول
+
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         isAdmin = true;
-        // استخدام sessionStorage بدلاً من localStorage للحفاظ على الأمان
-        sessionStorage.setItem("isAdmin", "true");
-        sessionStorage.setItem("adminLoginTime", Date.now().toString());
+        localStorage.setItem("isAdmin", "true");
         document.getElementById("loginLogoutBtn").innerHTML = '<i class="bi bi-box-arrow-right"></i> تسجيل خروج';
         showToast("تم تسجيل الدخول بنجاح", "success");
         showAdminPanel();
-        
-        // إعادة تعيين عداد المحاولات الفاشلة
-        loginAttempts = 0;
       } else {
-        // زيادة عداد المحاولات الفاشلة
-        loginAttempts++;
-        sessionStorage.setItem('loginAttempts', loginAttempts.toString());
-        
-        // إذا تجاوز الحد المسموح، يتم قفل تسجيل الدخول لمدة 30 دقيقة
-        if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-          const lockExpiry = Date.now() + (30 * 60 * 1000); // 30 دقيقة بالمللي ثانية
-          sessionStorage.setItem('loginLockExpiry', lockExpiry.toString());
-          showToast("تم تجاوز الحد المسموح من المحاولات. تم قفل تسجيل الدخول لمدة 30 دقيقة", "danger");
-        } else {
-          const remainingAttempts = MAX_LOGIN_ATTEMPTS - loginAttempts;
-          showToast(`خطأ في اسم المستخدم أو كلمة المرور. متبقي ${remainingAttempts} محاولات`, "danger");
-        }
-      }
-      
-      // تجديد رمز الـ CSRF
-      const newToken = generateCSRFToken();
-      if (csrfTokenInput) {
-        csrfTokenInput.value = newToken;
+        showToast("خطأ في اسم المستخدم أو كلمة المرور", "danger");
       }
     }
 
     function performLogout() {
       isAdmin = false;
-      // استخدام sessionStorage بدلاً من localStorage
-      localStorage.removeItem("isAdmin"); // نحافظ على هذا للتوافق الخلفي
-      sessionStorage.removeItem("isAdmin");
-      sessionStorage.removeItem("adminLoginTime");
-      // إزالة البيانات المؤقتة للأمان
-      sessionStorage.removeItem("loginAttempts");
-      sessionStorage.removeItem("loginLockExpiry");
-      
+      localStorage.removeItem("isAdmin");
       document.getElementById("loginLogoutBtn").innerHTML = '<i class="bi bi-person-fill"></i> دخول الإدارة';
       hideAdminPanel();
       showToast("تم تسجيل الخروج بنجاح", "info");
@@ -5300,26 +5110,21 @@
       tbody.innerHTML = "";
 
       if (projects.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center">لا توجد مشاريع حالياً</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center">لا توجد مشاريع حالياً</td></tr>`;
         return;
       }
 
-      projects.forEach((project, index) => {
+      projects.forEach((p, i) => {
         const row = document.createElement("tr");
-
         row.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${project.title || ""}</td>
-          <td>${project.location || ""}</td>
+          <td>${i+1}</td>
+          <td>${p.title}</td>
+          <td>${p.location}</td>
           <td>
-            <img src="${project.image || 'https://via.placeholder.com/100x60?text=No+Image'}" alt="${project.title}" 
-                 style="width: 100px; height: 60px; object-fit: cover; border-radius: 6px;">
-          </td>
-          <td>
-            <button class="btn btn-sm btn-primary me-1" onclick="editProject('${project.key || project.id}')">
+            <button class="btn btn-sm btn-primary me-1" onclick="editProject('${p.key}')">
               <i class="bi bi-pencil"></i> تعديل
             </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteProject('${project.key || project.id}')">
+            <button class="btn btn-sm btn-danger" onclick="deleteProject('${p.key}')">
               <i class="bi bi-trash"></i> حذف
             </button>
           </td>
@@ -5455,65 +5260,24 @@
       // إنشاء بطاقة عقار بتصميم احترافي ومبسط
       colDiv.innerHTML = `
         <div class="real-estate-card ${isFeatured ? 'featured-property' : ''}" data-category="${property.category || ''}">
-          <div class="card-image-container">
-            <img src="${image}" alt="${property.title || 'عقار'}" class="card-image" loading="lazy">
-            
-            <div class="image-overlay"></div>
-            
-            <div class="property-label ${type === 'للإيجار' ? 'rent-label' : 'sale-label'}">
-              <i class="bi ${type === 'للإيجار' ? 'bi-key' : 'bi-house-door'}"></i>
-              <span>${type}</span>
-            </div>
-            
-            <div class="property-price">
-              ${price}
-            </div>
-            
-            <div class="property-badges">
-              ${badgesHTML}
-            </div>
-          </div>
+          <img src="${image}" alt="${property.title || 'عقار'}" class="card-image" loading="lazy">
+          <div class="card-price-badge">${price}</div>
           
-          <div class="card-content">
-            <h3 class="property-title">${property.title || ""}</h3>
-            
-            <div class="property-location">
-              <i class="bi bi-geo-alt-fill"></i>
-              <span>${property.location || ""}</span>
+          <div class="card-body">
+            <h3 class="card-title">${property.title || ""}</h3>
+            <p class="mb-0">${property.location || ""}</p>
+            <div class="card-features">
+              ${rooms ? `<span><i class="bi bi-house-door me-1"></i>${rooms}</span>` : '<span><i class="bi bi-house-door me-1"></i>-</span>'}
+              ${bathrooms ? `<span><i class="bi bi-droplet me-1"></i>${bathrooms}</span>` : '<span><i class="bi bi-droplet me-1"></i>-</span>'}
+              ${area ? `<span><i class="bi bi-arrows-angle-contract me-1"></i>${area}</span>` : '<span><i class="bi bi-arrows-angle-contract me-1"></i>-</span>'}
             </div>
             
-            <div class="property-features">
-              ${area ? `
-                <div class="feature">
-                  <i class="bi bi-bounding-box"></i>
-                  <span>${area} م²</span>
-                </div>
-              ` : ''}
-              
-              ${rooms ? `
-                <div class="feature">
-                  <i class="bi bi-door-closed"></i>
-                  <span>${rooms} غرف</span>
-                </div>
-              ` : ''}
-              
-              ${bathrooms ? `
-                <div class="feature">
-                  <i class="bi bi-droplet"></i>
-                  <span>${bathrooms} حمامات</span>
-                </div>
-              ` : ''}
-            </div>
-            
-            <div class="card-actions">
-              <a href="https://wa.me/966535342404?text=استفسار حول العقار: ${encodeURIComponent(property.title || '')}" class="action-btn action-whatsapp" target="_blank" aria-label="تواصل عبر واتساب">
-                <i class="bi bi-whatsapp"></i>
-                <span>تواصل واتساب</span>
+            <div class="mt-3 d-flex gap-2">
+              <a href="https://wa.me/966535342404?text=استفسار حول العقار: ${encodeURIComponent(property.title || '')}" class="btn btn-success btn-sm flex-grow-1" target="_blank">
+                <i class="bi bi-whatsapp me-1"></i> واتساب
               </a>
-              
-              <button class="action-btn action-details" onclick="viewPropertyDetails('${property.key || property.id}')" aria-label="عرض تفاصيل العقار">
-                <i class="bi bi-eye-fill"></i>
-                <span>التفاصيل</span>
+              <button class="btn btn-primary btn-sm flex-grow-1" onclick="viewPropertyDetails('${property.key || property.id}')">
+                <i class="bi bi-eye-fill me-1"></i> التفاصيل
               </button>
             </div>
           </div>
@@ -8141,42 +7905,8 @@
         window.projects = projects;
       }
 
-      // إضافة المشاريع الثلاثة الأساسية
-      projects = [
-        {
-          key: "project1",
-          title: "مجمع الواحة السكني",
-          location: "الرياض - حي النرجس",
-          description: "مجمع سكني فاخر يضم شقق وفلل مميزة بمختلف المساحات",
-          price: "يبدأ من 500,000 ريال",
-          imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
-          status: "جاري البناء",
-          completion: "85%",
-          date: new Date().toISOString()
-        },
-        {
-          key: "project2",
-          title: "أبراج المستقبل",
-          location: "جدة - الكورنيش",
-          description: "مشروع أبراج سكنية وتجارية بإطلالة بحرية خلابة",
-          price: "يبدأ من 750,000 ريال",
-          imageUrl: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800",
-          status: "مكتمل",
-          completion: "100%",
-          date: new Date().toISOString()
-        },
-        {
-          key: "project3",
-          title: "واحة الأعمال",
-          location: "الدمام - حي الشاطئ",
-          description: "مجمع مكاتب ومحلات تجارية بتصميم عصري",
-          price: "يبدأ من 1,200,000 ريال",
-          imageUrl: "https://images.unsplash.com/photo-1520332820996-4ae1bc4e1798?w=800",
-          status: "قيد التخطيط",
-          completion: "30%",
-          date: new Date().toISOString()
-        }
-      ];
+      // تهيئة مصفوفة المشاريع فارغة
+      projects = [];
       window.projects = projects;
       
       // حفظ التغييرات في التخزين المحلي
@@ -8186,18 +7916,18 @@
       // تحديث عداد المشاريع في لوحة المشرف
       const totalProjectsCount = document.getElementById('totalProjectsCount');
       if (totalProjectsCount) {
-        totalProjectsCount.textContent = '3';
+        totalProjectsCount.textContent = '0';
       }
       
-      // تحديث عدادات المشاهدات والتفاعلات مع أرقام أكثر واقعية
+      // تحديث عدادات المشاهدات والتفاعلات
       const projectViewsCount = document.getElementById('projectViewsCount');
       if (projectViewsCount) {
-        projectViewsCount.textContent = '1,247';
+        projectViewsCount.textContent = '0';
       }
       
       const projectInteractions = document.getElementById('projectInteractions');
       if (projectInteractions) {
-        projectInteractions.textContent = '385';
+        projectInteractions.textContent = '0';
       }
 
       // إذا كانت القائمة فارغة نعرض رسالة
@@ -8287,6 +8017,60 @@
         }
       });
     }
+  </script>
+
+  <!-- سكريبت معاينة الصور قبل الرفع -->
+  <script>
+    document.getElementById("mainImageFile").addEventListener("change", function(e) {
+      const preview = document.getElementById("additionalImagesPreview");
+      
+      // إظهار معاينة الصورة الرئيسية
+      if (e.target.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // إضافة عنوان "الصورة الرئيسية" فوق المعاينة
+          const previewHeader = document.createElement("div");
+          previewHeader.style = "width:100%; margin-bottom:8px; font-weight:bold; color:#0f4c81;";
+          previewHeader.innerHTML = '<i class="bi bi-image"></i> معاينة الصورة الرئيسية';
+          
+          // إنشاء عنصر الصورة
+          const img = document.createElement("img");
+          img.src = reader.result;
+          img.style = "width:200px; height:150px; object-fit:cover; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border:2px solid #fff;";
+          
+          // تنظيف المعاينة السابقة وإضافة العناصر الجديدة
+          preview.innerHTML = "";
+          preview.appendChild(previewHeader);
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    });
+
+    document.getElementById("additionalImages").addEventListener("change", function(e) {
+      const preview = document.getElementById("additionalImagesPreview");
+      const files = e.target.files;
+      
+      if (files.length > 0) {
+        // إضافة عنوان "الصور الإضافية" فوق المعاينات
+        const previewHeader = document.createElement("div");
+        previewHeader.style = "width:100%; margin:16px 0 8px 0; font-weight:bold; color:#0f4c81;";
+        previewHeader.innerHTML = '<i class="bi bi-images"></i> معاينة الصور الإضافية';
+        preview.appendChild(previewHeader);
+        
+        // إظهار معاينة لكل صورة إضافية
+        Array.from(files).forEach(file => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = document.createElement("img");
+            img.src = reader.result;
+            img.style = "width:150px; height:100px; object-fit:cover; margin:5px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); border:2px solid #fff;";
+            preview.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
   </script>
 </body>
 </html>
